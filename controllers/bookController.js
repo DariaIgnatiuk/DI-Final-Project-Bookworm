@@ -2,6 +2,7 @@ const bookModel = require("../models/bookModel.js");
 require("dotenv").config();
 const { compressBooks, compressSingleBook} = require('../utils/bookUtils.js');
 
+
 module.exports = {
     // get all books of the user from the DB
     getAllBooks: async (req, res) => {
@@ -53,8 +54,7 @@ module.exports = {
         const id = req.params.id;
         try {
             const book = await bookModel.searchBookById(id);
-            console.log(compressSingleBook(book));
-            if (book) res.status(200).json(compressedSingleBook(book))
+            if (book) res.status(200).json(compressSingleBook(book))
             else res.status(404).json({ message: 'Book not found' });
         } catch (error) {
             console.log(error);
