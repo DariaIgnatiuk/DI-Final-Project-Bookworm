@@ -4,16 +4,19 @@ const cors = require("cors");
 const path = require("path");
 const userRouter = require('./routes/userRouter.js')
 const bookRouter = require('./routes/bookRouter.js')
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 // for development
 app.use(cors({
-  origin: process.env.HOST_URL, // Replace with your frontend URL
+  origin: process.env.HOST_URL, 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
+
+
 
 app.listen(process.env.PORT || 3001, () => {
   console.log(`Server listening on ${process.env.PORT || 3001}`);
