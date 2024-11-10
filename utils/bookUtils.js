@@ -1,5 +1,5 @@
 // Return the compressed books object instead of the original one and number of books found
-export const compressBooks = (books) => {
+const compressBooks = (books) => {
     let result = {totalItems : books.totalItems, items:[]};
     for (const item of books.items) {
         const book = {
@@ -14,7 +14,7 @@ export const compressBooks = (books) => {
 }
 
 // Return the compressed single book
-export const compressSingleBook = (book) => {
+const compressSingleBook = (book) => {
     const result = {
         authors: book.volumeInfo.authors.join(',  '),
         booktype: "Physical",
@@ -35,4 +35,9 @@ export const compressSingleBook = (book) => {
         id:0
     }
     return result; 
+}
+
+module.exports = {
+    compressBooks,
+    compressSingleBook
 }
