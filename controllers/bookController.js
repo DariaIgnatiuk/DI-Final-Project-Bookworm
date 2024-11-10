@@ -1,6 +1,6 @@
 const bookModel = require("../models/bookModel.js");
 require("dotenv").config();
-import { compressBooks, compressSingleBook} from '../utils/bookUtils.js'
+const { compressBooks, compressSingleBook} = require('../utils/bookUtils.js');
 
 module.exports = {
     // get all books of the user from the DB
