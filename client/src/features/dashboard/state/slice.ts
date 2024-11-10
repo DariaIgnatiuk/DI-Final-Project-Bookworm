@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExplicitAppState } from "../../../app/store"
-import { bookSmall } from "../../../model/types";
+import { bookSmall } from "../../../types";
 
 export type BooksReducerState = {
     books: bookSmall[];

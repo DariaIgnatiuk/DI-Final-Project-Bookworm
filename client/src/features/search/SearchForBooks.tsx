@@ -2,7 +2,7 @@ import Navigation from "../navigation/Navigation";
 import { useRef, useState } from 'react';
 import axios from "axios";
 import { BASE_URL } from '../../model/baseURL';
-import {BooksCompressedEmpty} from '../../model/types';
+import {BooksCompressedEmpty} from '../../types';
 import { Link } from "react-router-dom";
 
 const SearchForBooks = () => {

@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import Logout from "../loginRegister/Logout";
 import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
-import { emptyBookExpanded } from "../../model/types";
+import { emptyBookExpanded } from "../../types";
 
 const AddBook = () => {
     // state for displaying error message
@@ -56,6 +56,12 @@ const AddBook = () => {
         }
     }
 
+    const checkScore = (score:number):boolean => {
+        if (score > 5) return false;
+        else if (score < 0) return false;
+        else return true;
+    }
+
     // post book, show the success message and navitage to Dashboard
     const addBookToDB = () => {
         // save information about the finished book
@@ -68,8 +74,7 @@ const AddBook = () => {
             // const currentDate = new Date();
 
             // check if score is valid
-            if ((score) && (score > 5)) { setMessage('Score can not be higher than 5')}
-            else if ((score) && (score < 0)) {setMessage('Score can not be lower than 0')}
+            if ((score) && (score > 5)) { setMessage('Score can not be higher than 5 or lower than 0')}
             // check if start date is valid
             // else if (currentDate.getTime() < new Date(date_start).getTime()) 
             else{

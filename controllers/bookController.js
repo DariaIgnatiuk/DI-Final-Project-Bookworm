@@ -1,46 +1,6 @@
 const bookModel = require("../models/bookModel.js");
 require("dotenv").config();
-
-// Return the compressed books object instead of the original one and number of books found
-const compressBooks = (books) => {
-    let result = {totalItems : books.totalItems, items:[]};
-    for (const item of books.items) {
-        const book = {
-            id:item.id,
-            title: item.volumeInfo.title,
-            authors: item.volumeInfo.authors,
-            image: item.volumeInfo.imageLinks?.thumbnail
-        }
-        result.items.push(book);
-    }
-    return result; 
-}
-
-// Return the compressed single book
-const compressedSingleBook = (book) => {
-    const result = {
-        authors: book.volumeInfo.authors.join(',  '),
-        booktype: "Physical",
-        categories: book.volumeInfo.categories.join(', '),
-        date_finish: null,
-        date_start: null,
-        // deleting all html tags from the book description
-        description: book.volumeInfo.description.replace(/<[^>]*>/g, ''),
-        image: book.volumeInfo.imageLinks.thumbnail,
-        language: book.volumeInfo.language,
-        pagecount: book.volumeInfo.pageCount,
-        pagetype:  'Page',
-        publisher:  book.volumeInfo.publisher,
-        reading_progress: null,
-        score: null,
-        status: null,
-        title: book.volumeInfo.title,
-        id:0
-    }
-    console.log(result);
-    
-    return result; 
-}
+import { compressBooks, compressSingleBook} from '../utils/bookUtils.js'
 
 module.exports = {
     // get all books of the user from the DB
@@ -93,7 +53,7 @@ module.exports = {
         const id = req.params.id;
         try {
             const book = await bookModel.searchBookById(id);
-            console.log(compressedSingleBook(book));
+            console.log(compressSingleBook(book));
             if (book) res.status(200).json(compressedSingleBook(book))
             else res.status(404).json({ message: 'Book not found' });
         } catch (error) {

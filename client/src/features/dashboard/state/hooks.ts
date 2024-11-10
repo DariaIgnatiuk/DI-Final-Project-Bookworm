@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../app/reduxHooks";
 import { useCallback } from "react";
 import { setBooks } from "./slice";
-import { bookSmall } from "../../../model/types";
+import { bookSmall } from "../../../types";
 import {selectBooksFinished, selectBooksReading, selectBooksWantToRead, selectAllBooks} from './selectors'
 
 // set books collection

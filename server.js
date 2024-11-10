@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 // for development
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend URL
+  origin: process.env.HOST_URL, // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));

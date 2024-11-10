@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom';
 import { useState, useEffect} from 'react';
 import axios from "axios";
 import { BASE_URL } from '../../model/baseURL';
-import { emptyBookExpanded } from '../../model/types';
+import { emptyBookExpanded } from '../../types';
 import Navigation from '../navigation/Navigation';
 
 const BookByID = () => {

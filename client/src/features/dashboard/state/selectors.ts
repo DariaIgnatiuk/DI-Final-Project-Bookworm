@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { booksState } from "./slice";
-import { bookSmall } from "../../../model/types";
+import { bookSmall } from "../../../types";
 
 export const selectBooksFinished = createSelector(
   [booksState],
