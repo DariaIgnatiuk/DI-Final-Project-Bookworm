@@ -74,7 +74,7 @@ const AddBook = () => {
             // const currentDate = new Date();
 
             // check if score is valid
-            if ((score) && (score > 5)) { setMessage('Score can not be higher than 5 or lower than 0')}
+            if ((score) && (checkScore(score))) { setMessage('Score can not be higher than 5 or lower than 0')}
             // check if start date is valid
             // else if (currentDate.getTime() < new Date(date_start).getTime()) 
             else{
