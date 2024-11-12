@@ -2,8 +2,9 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const path = require("path");
-const userRouter = require('./routes/userRouter.js')
-const bookRouter = require('./routes/bookRouter.js')
+const userRouter = require('./routes/userRouter.js');
+const bookRouter = require('./routes/bookRouter.js');
+const reviewRouter = require('./routes/reviewRouter.js');
 require('dotenv').config();
 
 const app = express();
@@ -24,6 +25,7 @@ app.listen(process.env.PORT || 3001, () => {
 
 app.use('/user', userRouter);
 app.use('/books', bookRouter);
+app.use('/reviews', reviewRouter);
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.join(__dirname, "/client/dist")));

@@ -75,6 +75,47 @@ module.exports = {
       throw error;
     }
   },
+  // remove a book from the DB
+  removeBook: async (id) => {
+    const trx = await db.transaction();
+    try {
+      await trx('books').where({ id:id }).del();
+      await trx.commit();
+      return { message: "Book removed successfully" };
+    } catch (error) {
+      await trx.rollback();
+      console.log(error);
+      throw error;
+    }
+  },
+  editBook: async (id, booktype, date_finish, date_start, pagecount, pagetype, reading_progress, score, status) => {
+    const trx = await db.transaction();
+    try {
+      const updatedBook = await trx("books")
+      .where({ id:id })
+      .update(
+        {
+          booktype,
+          date_finish,
+          date_start,
+          pagecount,
+          pagetype,
+          reading_progress,
+          score,
+          status,
+        },
+        
+        ["*"]
+      );
+      await trx.commit();
+      return updatedBook;
+    } catch (error) {
+      await trx.rollback();
+      console.log(error);
+      throw error;
+    }
+  },
+
 };
 
 

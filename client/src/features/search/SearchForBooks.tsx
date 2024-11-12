@@ -74,7 +74,7 @@ const SearchForBooks = () => {
             )}
                     <h4>{book.title}</h4>
                     <p>{book.authors}</p>
-                    <Link to={`/books/search/${book.id}`}><button>View</button></Link>
+                    <Link to={`/books/search/${book.id}`}><button>Add</button></Link>
                 </div>
             ))
         )

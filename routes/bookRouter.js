@@ -12,5 +12,9 @@ router.post('/search', bookController.searchBooks);
 router.get('/search/:id', bookController.searchBookById);
 // add books to DB
 router.post('/add', bookController.addBook);
+// remove books from DB
+router.delete('/remove/:id', bookController.removeBook);
+// edit books
+router.put('/edit/:id', bookController.editBook);
 
 module.exports = router;

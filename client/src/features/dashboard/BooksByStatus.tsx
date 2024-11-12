@@ -60,7 +60,6 @@ const BooksByStatus = () => {
         <Navigation/>
         <h2>{heading}</h2>
         { useSelectorAllBooks()?.map(book => (
-
         <div>
         <Link to={`/book/${book.id}`}><img key={book.id} src={book.image} alt={book.title} /></Link>
         <p>{book.title}</p>

@@ -8,6 +8,7 @@ import BooksByStatus from "./features/dashboard/BooksByStatus";
 import BookByID from "./features/dashboard/BookByID";
 import SearchForBooks from "./features/search/SearchForBooks";
 import AddBook from "./features/search/AddBook";
+import Congratulations from "./features/dashboard/Congratulations";
 import {Route, Routes} from 'react-router-dom'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path='/book/:id' element={<Auth><BookByID /></Auth>}/>
       <Route path='/books/search' element={<Auth><SearchForBooks /></Auth>}/>
       <Route path='/books/search/:id' element={<Auth><AddBook/></Auth>}/>
+      <Route path='/books/congratulations' element={<Auth><Congratulations/></Auth>}/>
     </Routes>
     </>
   );

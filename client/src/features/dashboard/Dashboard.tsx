@@ -78,7 +78,7 @@ const Dashboard = () => {
         {/* if there are books with status = WantToRead, display them */}
          {(booksWantToRead.length != 0)? (
             <div>
-            <div>Want to read::</div>
+            <div>Want to read:</div>
             { booksWantToRead.map(book => ( 
                 <Link to={`/book/${book.id}`}><img key={book.id} src={book.image} alt={book.title} /></Link>
             )) }

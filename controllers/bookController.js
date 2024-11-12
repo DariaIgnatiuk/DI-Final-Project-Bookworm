@@ -70,7 +70,30 @@ module.exports = {
           const book = await bookModel.addBook(authors, booktype, categories, date_finish,date_start,
             description, image, language, pagecount, pagetype, publisher, reading_progress,
             score, status, title, user_id);
-          res.status(201).json(`Book added successfully!`);
+          res.status(201).json('Book added successfully!');
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "internal server error" });
+        }
+      },
+
+    // remove a book from the user's collection in the DB
+    removeBook: async (req, res) => {
+        const id = req.params.id;
+        try {
+          await bookModel.removeBook(id);
+          res.status(200).json(`Book removed successfully!`);
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "internal server error" });
+        }
+      },
+      editBook:  async (req, res) => {
+        const {booktype, date_finish, date_start, pagecount, pagetype, reading_progress, score, status} = req.body;
+        const id = req.params.id;
+        try {
+          const book = await bookModel.editBook( id, booktype, date_finish, date_start, pagecount, pagetype, reading_progress, score, status);
+          res.status(201).json({message:`Changes were saved successfully!`, book:book});
         } catch (error) {
           console.log(error);
           res.status(500).json({ message: "internal server error" });

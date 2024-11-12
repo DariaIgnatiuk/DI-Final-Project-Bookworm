@@ -28,12 +28,13 @@ const compressSingleBook = (book) => {
         pagecount: book.volumeInfo.pageCount,
         pagetype:  'Page',
         publisher:  book.volumeInfo.publisher,
-        reading_progress: null,
+        reading_progress: 0,
         score: null,
         status: null,
         title: book.volumeInfo.title,
         id:0
     }
+    if (!result.pagecount) result.pagecount = 0;
     return result; 
 }
 

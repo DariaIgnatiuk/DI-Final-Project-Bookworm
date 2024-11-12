@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { booksState } from "./slice";
-import { bookSmall } from "../../../types";
+import { booksState, messageState, currentBookState } from "./slice";
+import { bookSmall, bookExpanded } from "../../../types";
 
 export const selectBooksFinished = createSelector(
   [booksState],
@@ -27,3 +27,17 @@ export const selectAllBooks = createSelector(
       [booksState],
       (books: bookSmall[]) => {return books}
     );
+
+export const selectMessage = createSelector(
+  [messageState],
+  (message: string) => {
+    return message;
+  }
+);
+
+export const selectCurrentBook = createSelector(
+  [currentBookState],
+  (currentBook: bookExpanded) => {
+    return currentBook;
+  }
+);
