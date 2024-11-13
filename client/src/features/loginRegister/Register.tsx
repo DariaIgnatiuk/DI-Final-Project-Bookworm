@@ -96,7 +96,7 @@ const Register = () => {
                 <label className='formLabel'>Password: </label> 
                 <label className='formLabel'>Date of birth: </label> 
             </div>
-            <div className='inputs'>
+            <div className='inputsDiv'>
             <input type='text' className='inputs'  ref={firstNameRef}required/>
             <input type='text' className='inputs' ref={familyNameRef} required/>
             <input type='text' className='inputs'  ref={usernameRef}required/>

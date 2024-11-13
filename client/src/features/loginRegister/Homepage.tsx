@@ -10,7 +10,7 @@ const Homepage = () => {
         </nav>
         <div className='main'>
         <h1>Welcome to Bookworm!</h1>
-        <img id='logo_image'src='/bookworm.png' width={350} />
+        <img id='logo_image'src='/bookworm.png' width={450} />
         </div>
         </>
     )

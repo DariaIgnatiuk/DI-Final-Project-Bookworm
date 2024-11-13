@@ -10,7 +10,6 @@ import {useSetBooks, useSelectorBooksFinished, useSelectorBooksReading, useSelec
 const Dashboard = () => {
     // get user data from localStorage
     const user_first_name = localStorage.getItem('user_first_name');
-    const user_family_name = localStorage.getItem('user_family_name');
     const user_id = localStorage.getItem('user_id');
     // state for displaying error message
     const [message, setMessage] = useState('');
@@ -53,7 +52,7 @@ const Dashboard = () => {
             <Logout/>
         </nav>
         <div className='main'>
-        <h4 id='dashboardHeading'>{user_first_name} {user_family_name}, welcome to your Dashboard!</h4>
+        <h3 id='dashboardHeading'>Welcome to your Dashboard, {user_first_name} !</h3>
 
 
         {/* if there are books with status = Reading, display them */}
