@@ -90,20 +90,24 @@ const AddBook = () => {
     const statusFinishedGetAdditionalInfo = () => {
         book.status = 'Finished';
         return (
-            <div>
+            <dialog open id='dialog'>
+            <div className="dialogWindow">
                 <label>When did you start reading this book?  </label>
                 <input type="date" ref={date_startRef}/><br/>
                 <label>When did you finish reading this book?  </label>
                 <input type="date" ref={date_finishRef}/> <br/>
                 <label>How would you rate this book?  </label>
                 <input ref={rateRef}placeholder="0..5"/> <br/>
-                <button onClick={statusFinishedValidateInput}>Save</button>
+                <button className='button'onClick={statusFinishedValidateInput}>Save</button>
             </div>
+            </dialog>
         )
     }
 
         // ONLY FOR READING validates Reading Now books
         const statusReadingValidateInput = () => {
+            const dialog = document.getElementById("dialog") as HTMLDialogElement;
+            dialog.close();
             book.date_start = date_startRef.current?.value.toString();
             // if the user didn't set start date, it is set as current date
             if (!book.date_start) {
@@ -121,48 +125,54 @@ const AddBook = () => {
     const statusReadingGetAdditionalInfo = () => {
             book.status = 'Reading';
             return (
-                <div>
-                    <label>When did you start reading this book?  </label>
+                <dialog open id='dialog'>
+                <div className="dialogWindow">
+                    <label className='label'>When did you start reading this book?  </label>
                     <input type="date" ref={date_startRef}/><br/>
-                    <label>What kind of book do you read?  </label>
+                    <label className='label'>What kind of book do you read?  </label>
                     <select id="book_type" ref={booktypeRef}>
                         <option value="Physical">Paper</option>
                         <option value="eBook">e-book</option>
                         <option value="Audiobook">Audiobook</option> 
                     </select><br/>
-                    <label>How would you like to display your pages?  </label>
+                    <label className='label'>How would you like to display your pages?  </label>
                     <select id="page_type" ref={pagetypeRef}>
                         <option value="Page">Page</option>
                         <option value="Percentage">Percentage</option>
                         <option value="Episode">Episode</option> 
                     </select><br/>
-                    <label>Total pages: </label>
+                    <label className='label'>Total pages: </label>
                     <input type='text' ref={pagecountRef} /><br/>
-                    <button onClick={statusReadingValidateInput}>Save</button>
+                    <button className='button'onClick={statusReadingValidateInput}>Save</button>
                 </div>
+                </dialog>
             )
         }
 
     // render the book into from server only if book id = 0 (so it fetched without errors) 
     const renderBook = () => {
         return (
-            <div>
+            <div className='bookCardBig'>
+                <div className='bookCardBigImage'>
             {book.image ? (
-                <img src={book.image} alt={book.title} />
+                <img src={book.image} className='bigImage' alt={book.title} />
                 ) : (
-                <img src="../../../Missing-book-cover.jpg" alt="Missing Book Cover" />
+                <img src="../../../Missing-book-cover.jpg" className='bigImage' alt="Missing Book Cover" />  
             )}
+            </div>
+            <div>
                 <h2>{book.title}</h2>
                 <h4>{book.authors}</h4>
-                <p>{book.categories? (<>Categories: {book.categories}</>):<></> }</p>
-                <p>{book.language? (<>Language: {book.language}</>):<></> }</p>
-                <p >{book.description? (<>Description: {book.description}</>):<></> }</p>
-                <button onClick={()=>{
+                {(book.categories)?(<p><span className='bookCardBigInfo'>Categories: </span>{book.categories}</p>):<></>}
+                {(book.language)?(<p><span className='bookCardBigInfo'>Language: </span>{book.language}</p>):<></>}
+                {(book.description)?(<p className='description'><span className='bookCardBigInfo'>Description: </span>{book.description}</p>):<></>}
+                <button className='buttonBig'onClick={()=>{
                     book.status = 'WantToRead';
                     addBookToDB();
                 }}>Add to the reading list</button>
-                <button onClick={()=>{setStatus('Reading')}}>Start reading now</button>
-                <button onClick={()=>{setStatus('Finished')}}>Mark as finished</button> 
+                <button className='buttonBig' onClick={()=>{setStatus('Reading')}}>Start reading now</button>
+                <button className='buttonBig' onClick={()=>{setStatus('Finished')}}>Mark as finished</button> 
+                </div>
             </div>
 
         )
@@ -171,14 +181,16 @@ const AddBook = () => {
     return (
         <>
     <nav>
-        <Link to='/books/search'><button>Back</button></Link>
-        <Link to='dashboard'><button>Dashboard</button></Link>
+        <Link to='/books/search'><button className='navButton'>Back</button></Link>
+        <Link to='dashboard'><button className='navButton'>Dashboard</button></Link>
         <Logout/>
     </nav>
+    <div className='main'>
+    <div className="errorMessage">{message}</div>
     {(book.id === 0)? renderBook():<></> }
     {(status === 'Finished')? statusFinishedGetAdditionalInfo() :<></>}
     {(status === 'Reading')? statusReadingGetAdditionalInfo() :<></>}
-    {message}
+    </div>
         </>
     )
 }

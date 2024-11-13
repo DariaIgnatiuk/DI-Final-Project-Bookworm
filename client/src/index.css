@@ -1,75 +1,342 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
+  height: 100%;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
+  font-family:  'Overpass', sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+#root{
+  width: 100%;
+
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+nav{
+  background-color: #aad5c5;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 2px;
+}
+
+footer {
+  background-color: #aad5c5;
+  height: 25px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.navButton {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  margin-right: 20px;
+  height:27px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.main {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainByStatus{
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1, h4 {
+  align-self: center;
+  margin-top: 25px;
+}
+
+#authHeader{
+  align-self: center;
+  margin-top: 100px;
+}
+
+#dashboardHeading{
+  align-self: center;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+form {
+  margin:20px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.form{
+  display: flex;
+  flex-direction: row;
+}
+
+.labels, .inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.formLabel {
+ margin:5px;
+}
+
+.inputs {
+  margin:3px;
+}
+
+.inputsDiv {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.inputsSearch {
+  margin: 0px;
+  padding: 3px;
+}
+
+.titleAndStatusContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button {
+  padding: 10px 20px;
+  margin-top:15px;
+  background-color: #aad5c5;
+  border: none;
+  cursor: pointer;
+  width: 140px;
+  align-self: center;
+  font-size: 15px;
+  border-radius: 5px;
+  margin:5px;
+}
+
+.gif{
+  height: 300px;
+  width:400px;
+  align-self: center;
+}
+
+.reviewQuestion{
+  align-self: center;
+}
+
+.buttonBig {
+  padding: 10px 20px;
+  margin-top:15px;
+  background-color: #aad5c5;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  align-self: center;
+  font-size: 15px;
+  border-radius: 5px;
+  margin:5px;
+  margin-bottom: 15px;
+}
+
+.buttonAdd {
+  padding: 10px 20px;
+  margin: 15px;
+  background-color: #aad5c5;
+  border: none;
+  cursor: pointer;
+  width: 120px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.searchQuery {
+  align-self: center;
+}
+
+.searchButtonAdd{
+  margin-left:20px;
+
+}
+
+.bookCollection {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboardStatus {
+  background-color: #aad5c5;
+  height: 145px;
+  width:115px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  border-radius: 5px;
+  margin-left: 25px;
+}
+
+
+.bookCard{
+  background-color: hsl(60, 54%, 93%);
+  height: 145px;
+  width:115px;
+  display: flex;
+  justify-content: center;
+  margin: 2px;
+}
+
+.bookCardBig{
+  background-color: hsl(60, 54%, 93%);
+  margin:20px;
+  display: flex;
+  justify-content: center;
+}
+
+.bookCardBigImage{
+  margin: 20px 50px;
+}
+
+.bookCardMedium {
+  background-color: hsl(60, 54%, 93%);
+  width:400px;
+  margin: 20px;
+  display: flex;
+  border-radius: 5px;
+}
+
+
+.cardMediumImageContainer{
+  width: 180px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonPervNext{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.smallImage {
+  align-self: center;
+  height: 130px;
+}
+.mediumImage {
+  align-self: center;
+  height: 200px;
+}
+
+.bigImage {
+  align-self: center;
+  height:250px;
+}
+
+.statusBar{
+  height: 25px;
+  margin-left: 10px;
+
+}
+
+.statusBarBig{
+  height: 35px;
+  margin: 15px;
+  margin-right:25px;
+}
+
+.dashboardButton {
+  border:none;
+  background-color: hsl(60, 54%, 93%);
+  height: 45px;
+  width:115px;
+  margin: 2px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.noUnderlineLink {
+  text-decoration: none;
+}
+
+.mediumCardTitle{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 550;
+  color:black
+}
+
+.description{
+  height: 130px;
+  overflow-y: scroll;
+}
+
+.bookCardBigInfo{
+  font-weight: 599;
+}
+
+.dialogWindow {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+
+}
+
+.mediumCardAuthor{
+  margin-left: 10px;
+  font-size: 14px;
+  color:black
+}
+
+.label {
+  margin-bottom: 10px;
+}
+
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+#logo_image{
+  align-self: center;
+}
+
+.main > h3 {
+  align-self: center;
+  padding-top: 0;
+  margin-top: 5px;
+}
+
+.errorMessage {
+  align-self: center;
 }
 
 /* need this!! */
 .progress-bar {
-  width: 200px;
+  margin-top: 10px;
+
+  width: 97%;
   height: 20px;
   background-color: white;
   border: 1px solid black;

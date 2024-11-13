@@ -30,8 +30,14 @@ const Auth: React.FC<AuthProps>  = ({ children}) => {
 
   return redirect ? children : 
   <>
-    <h2>Not authorized</h2>
-    <Link to='/'><button>Back</button></Link>
+  <nav>
+  <Link to='/'><button className='navButton'>Back</button></Link>
+  </nav>
+  <div className="main">
+    <h2 id='authHeader'>You are not authorized</h2>
+    <h4>Please log in or register</h4>
+  </div>
+    
   </>
   ;
 };

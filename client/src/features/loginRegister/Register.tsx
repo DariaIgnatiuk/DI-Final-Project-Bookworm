@@ -40,7 +40,7 @@ const Register = () => {
     }
 
     // async registration
-    const register =  async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+    const register =  async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLButtonElement>):Promise<void> => {
         e.preventDefault();
         // getting all the values
         const date_of_birth = dateOfBirthRef.current?.value;
@@ -72,27 +72,45 @@ const Register = () => {
         }
     }
 
+    const enter = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (event.keyCode === 13) {
+            register(event);
+        }
+    }
+
     return (
         <>
-        <Link to='/'><button>Back</button></Link>
-        <Link to='/login'><button>Login</button></Link>
+        <nav>
+            <Link to='/login'><button className='navButton'>Login</button></Link>
+            <Link to='/'><button className='navButton'>Back</button></Link>
+        </nav>
+        <div className='main'>
         <h1>Register</h1>
         <form onSubmit={(event) => register(event)}>
-            <label >First name: </label>
-            <input type='text' name='first_name'  ref={firstNameRef}required/><br/>
-            <label >Last name: </label>
-            <input type='text' name='last_name' ref={familyNameRef} required/><br/>
-            <label >Username: </label>
-            <input type='text' name='username' ref={usernameRef}required/><br/>
-            <label >Email: </label>
-            <input type='email' name='email' ref={emailRef}required/><br/>
-            <label >Password: </label>
-            <input type='password' name='password' ref={passwordRef}required/><br/>
-            <label >Date of birth: </label>
-            <input type='date' name='date_of_birth' ref={dateOfBirthRef}required/><br/>
-            <button type='submit' >Register</button>
+        <div className='form'>
+            <div className='labels'> 
+                <label className='formLabel'>First name: </label>
+                <label className='formLabel'>Last name: </label> 
+                <label className='formLabel'>Username: </label>
+                <label className='formLabel'>Email: </label>
+                <label className='formLabel'>Password: </label> 
+                <label className='formLabel'>Date of birth: </label> 
+            </div>
+            <div className='inputs'>
+            <input type='text' className='inputs'  ref={firstNameRef}required/>
+            <input type='text' className='inputs' ref={familyNameRef} required/>
+            <input type='text' className='inputs'  ref={usernameRef}required/>
+            <input type='email' className='inputs'  ref={emailRef}required/>
+           <input type='password' className='inputs' ref={passwordRef}required/>
+           <input type='date' className='inputs'  ref={dateOfBirthRef}required/>
+            </div>
+        </div>
+        <button className='button' type='submit' onKeyUp={(event) => enter(event)}>Register</button>
         </form>
-        <div id='errorMessage'>{message}</div>
+        <div className='errorMessage'>{message}</div>
+        </div>
+
+        
         </>
     )
 }

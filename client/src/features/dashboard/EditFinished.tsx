@@ -15,6 +15,8 @@ const EditFinished = () => {
 
   // edit the book - send request to server
   const editBook = async (): Promise<void> => {
+    const dialog = document.getElementById("dialog") as HTMLDialogElement;
+    dialog.close();
     const score = Number(scoreRef.current?.value);
     if (!score) {
       useSetMessageHook("Please enter a score");
@@ -53,29 +55,28 @@ const EditFinished = () => {
 
   const getAdditionalInfo = () => {
     return (
-      <div>
+        <dialog open id='dialog'>
+      <div className="dialogWindow">
         <p>My rating for this book: {book.score}</p>
         <p>I would like to change it to: </p>
         <input type="text" ref={scoreRef} />
         <br />
-        <button onClick={editBook}>Save</button>
+        <button className='button'onClick={editBook}>Save</button>
       </div>
+      </dialog>
     );
   };
 
   return (
     <>
-      {!renderInputs ? (
         <button
+        className="button"
           onClick={() => {
-            setRenderInputs(true);
+            setRenderInputs(!renderInputs);
           }}
         >
           Change rating
         </button>
-      ) : (
-        <></>
-      )}
       {renderInputs ? getAdditionalInfo() : <></>}
     </>
   );

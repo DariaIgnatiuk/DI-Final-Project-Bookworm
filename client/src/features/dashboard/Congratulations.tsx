@@ -7,11 +7,17 @@ const Congratulations = () => {
 
     return (
         <>
+        <div className='main' >
         <h1>Congratulations!</h1>
-        <img src={`../../../congratulations/congratulations${randomNumber}.webp`}/>
+        <img className='gif'src={`../../../congratulations/congratulations${randomNumber}.webp`}/>
+        <div className='reviewQuestion'>
         <p>Would you like to add a review?</p>
-        <button>Yes</button>
-        <button onClick={()=>{navigate('/dashboard')}}>No</button>
+        <div>
+        <button className='button' onClick={()=>{navigate('/review/add')}}>Yes</button>
+        <button className='button' onClick={()=>{navigate('/dashboard')}}>No</button>
+        </div>
+        </div>
+        </div>
         </>
     )
 }

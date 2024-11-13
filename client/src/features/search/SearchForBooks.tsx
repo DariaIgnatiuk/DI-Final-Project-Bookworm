@@ -65,43 +65,59 @@ const SearchForBooks = () => {
 
     const displayBooks = () => {
         return (
+        
             books[index].map(book => (
-                <div key={book.id}>
+                <div key={book.id} className="bookCardMedium">
             {book.image ? (
-                <img src={book.image} alt={book.title} />
+                <div className="cardMediumImageContainer"> <img src={book.image}  className="mediumImage"alt={book.title} /> </div>
                 ) : (
-            <img src="../../../Missing-book-cover.jpg" alt="Missing Book Cover" />
+                    <div className="cardMediumImageContainer"> <img src="../../../Missing-book-cover.jpg"  className="mediumImage" alt="Missing Book Cover" /> </div>
             )}
-                    <h4>{book.title}</h4>
-                    <p>{book.authors}</p>
-                    <Link to={`/books/search/${book.id}`}><button>Add</button></Link>
+            <div >
+                    <p className="mediumCardTitle">{book.title}</p>
+                    <p className="mediumCardAuthor">{book.authors}</p>
+                    <Link to={`/books/search/${book.id}`}><button className='buttonAdd'>Add</button></Link>
+                    </div>
                 </div>
             ))
+            
         )
     }
 
     const previousPage = () => {
         setIndex(index - 1);
-        window.scrollTo(0, 0);
+        window.scrollTo(0, window.innerHeight / 2);
     }
 
     const nextPage = () => { 
         setIndex(index + 1);
-        window.scrollTo(0, 0);
+        window.scrollTo(0, window.innerHeight / 2);
+    }
+
+    const enter = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (event.keyCode === 13) {
+            fetchBooks();
+        }
     }
 
     return (
         <>
         <Navigation/>
+        <div className='main'>
         <h3>Search</h3>
-        <input ref={titleRef} placeholder="Title"/> <br/>
-        <input ref={authorsRef} placeholder="Author"/> <br/>
-        <button onClick={fetchBooks}>Find books</button><br/>
-        {searchQuery?(<p>You are searching for: <i>{searchQuery}</i></p>) :<></>}
-        {(totalItems)? displayBooks():<></>}
-        {(index >= 1) && (index <= maxPages)? (<button onClick={previousPage}>Previous</button>): <></>}
-        {(index >= 0) && (index <= maxPages - 1)? (<button onClick={nextPage}>Next</button>): <></>}
-        {message}
+        <div className='inputsDiv'>
+        <input ref={titleRef} className='inputsSearch'  placeholder="Title"/> <br/>
+        <input ref={authorsRef} className='inputsSearch' placeholder="Author"/> <br/>
+        </div>
+        <button onClick={fetchBooks} onKeyUp={(event) => enter(event)}className='button' >Find books</button><br/>
+        {searchQuery?(<p className='searchQuery'>You are searching for: <b><i>{searchQuery}</i></b></p>) :<></>}
+        {(totalItems)? <div className="mainByStatus">{displayBooks()}</div>:<></>}
+        <div className="buttonPervNext">
+        {(index >= 1) && (index <= maxPages)? (<button className='button' onClick={previousPage}>Previous</button>): <></>}
+        {(index >= 0) && (index <= maxPages - 1)? (<button className='button' onClick={nextPage}>Next</button>): <></>}
+        </div>
+        <div className='errorMessage'>{message}</div>
+        </div>
         </>
     )
 }

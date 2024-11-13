@@ -4,7 +4,6 @@ import axios from "axios";
 import { BASE_URL } from '../../model/baseURL';
 import Navigation from '../navigation/Navigation';
 import {useSetMessage, useSelectorMessage, useSetCurrentBook} from './state/hooks.js';
-import DeleteBook from './DeleteBook.js';
 import DisplayCurrentBook from './DisplayCurrentBook.js';
 
 const BookByID = () => {
@@ -28,15 +27,18 @@ const BookByID = () => {
 
     // fetch all books by status on component mount
     useEffect(() => {
+        useSetMessageHook('');
         fetchBook();
     },[])
 
     return (
         <>
         <Navigation/>
+        <div className='main'>
+        <div  className="errorMessage">{useSelectorMessage()}</div>
         <DisplayCurrentBook/>
-        <DeleteBook />
-        <div>{useSelectorMessage()}</div>
+        
+        </div>
         </>
     )
 }

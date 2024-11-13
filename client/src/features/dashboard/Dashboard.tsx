@@ -18,11 +18,11 @@ const Dashboard = () => {
     const navigate = useNavigate();
     let booksReading = useSelectorBooksReading();
     // show only the first 5 book from the list
-    if (booksReading.length > 5) {booksReading = booksReading.slice(0, 5);}
+    if (booksReading.length > 7) {booksReading = booksReading.slice(0, 7);}
     let booksWantToRead = useSelectorBooksWantToRead();
-    if (booksWantToRead.length > 5) {booksWantToRead = booksWantToRead.slice(0, 5);}
+    if (booksWantToRead.length > 7) {booksWantToRead = booksWantToRead.slice(0, 7);}
     let booksFinished = useSelectorBooksFinished();
-    if (booksFinished.length > 5) {booksFinished = booksFinished.slice(0, 5);}
+    if (booksFinished.length > 7) {booksFinished = booksFinished.slice(0, 7);}
 
     // fetch all books for the user
     const fetchAllBooks = async ():Promise<void>  =>{
@@ -49,46 +49,53 @@ const Dashboard = () => {
     return (
         <>
         <nav>
+            <Link to='/books/search'><button className='navButton'>Add a book</button></Link>
             <Logout/>
         </nav>
+        <div className='main'>
+        <h4 id='dashboardHeading'>{user_first_name} {user_family_name}, welcome to your Dashboard!</h4>
 
-        <h3>{user_first_name} {user_family_name}, welcome to your Dashboard!</h3>
 
         {/* if there are books with status = Reading, display them */}
         {(booksReading.length != 0)? (
-            <div>
-            <div>Currently reading:</div>
+            <div className='bookCollection'>
+            <div className='dashboardStatus'>Reading</div>
             { booksReading.map(book => (
-                <Link to={`/book/${book.id}`}><img key={book.id} src={book.image} alt={book.title} /></Link>
+                <Link to={`/book/${book.id}`}><div className='bookCard'><img className='smallImage' key={book.id} src={book.image} alt={book.title} /></div></Link>
             )) }
-            <button onClick={()=>navigate('/books/reading')}>See all</button>
+            <button className='dashboardButton' onClick={()=>navigate('/books/reading')}>View all</button>
             </div>) 
         :<></>}
+
+
         {/* if there are books with status = Finished, display them */}
         {(booksFinished.length != 0)? (
-            <div>
-            <div>Finished:</div>
+            <div className='bookCollection'>
+            <div className='dashboardStatus'><p className='status'>Finished</p></div>
             { booksFinished.map(book => (
-                <Link to={`/book/${book.id}`}><img key={book.id} src={book.image} alt={book.title} /></Link>
+                <Link to={`/book/${book.id}`}><div className='bookCard'><img className='smallImage'key={book.id} src={book.image} alt={book.title} /></div></Link>
             )) }
-            <button onClick={()=>navigate('/books/finished')}>See all</button>
+            <button className='dashboardButton' onClick={()=>navigate('/books/finished')}>View all</button>
             </div>) 
         :<></>}
+
+
 
         {/* if there are books with status = WantToRead, display them */}
          {(booksWantToRead.length != 0)? (
-            <div>
-            <div>Want to read:</div>
+            <div className='bookCollection'>
+            <div className='dashboardStatus'>Want to read</div>
             { booksWantToRead.map(book => ( 
-                <Link to={`/book/${book.id}`}><img key={book.id} src={book.image} alt={book.title} /></Link>
+                <Link to={`/book/${book.id}`}><div className='bookCard'><img className='smallImage' key={book.id} src={book.image} alt={book.title} /></div></Link>
             )) }
-            <button onClick={()=>navigate('/books/wanttoread')}>See all</button>
+            <button className='dashboardButton' onClick={()=>navigate('/books/wanttoread')}>View all</button>
             </div>) 
         :<></>} 
 
-        <Link to='/books/search'><button>Add a book</button></Link>
 
-        {message}
+
+        <div className='errorMessage'>{message}</div>
+        </div>
 
         </>
     )

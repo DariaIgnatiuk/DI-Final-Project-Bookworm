@@ -1,4 +1,4 @@
-import "./App.css";
+// import "./App.css";
 import Homepage from "./features/loginRegister/Homepage";
 import Register from "./features/loginRegister/Register";
 import Login from "./features/loginRegister/Login";
@@ -9,6 +9,7 @@ import BookByID from "./features/dashboard/BookByID";
 import SearchForBooks from "./features/search/SearchForBooks";
 import AddBook from "./features/search/AddBook";
 import Congratulations from "./features/dashboard/Congratulations";
+import AddReview from "./features/review/AddReview";
 import {Route, Routes} from 'react-router-dom'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Route path='/books/search' element={<Auth><SearchForBooks /></Auth>}/>
       <Route path='/books/search/:id' element={<Auth><AddBook/></Auth>}/>
       <Route path='/books/congratulations' element={<Auth><Congratulations/></Auth>}/>
+      <Route path='/review/add' element={<Auth><AddReview/></Auth>}/>
     </Routes>
     </>
   );

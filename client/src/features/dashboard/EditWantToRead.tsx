@@ -18,6 +18,8 @@ const EditWantToRead = () => {
 
         // edit the book - send request to server
         const editBook = async ():Promise<void>  =>{
+            const dialog = document.getElementById("dialog") as HTMLDialogElement;
+            dialog.close();
             const pagetype = (pagetypeRef.current?.value)? pagetypeRef.current?.value : book.pagetype;
             const booktype = (booktypeRef.current?.value)? booktypeRef.current?.value : book.booktype;
             const pagecount = (pagecountRef.current?.value)? Number(pagecountRef.current?.value) : book.pagecount;
@@ -59,32 +61,34 @@ const EditWantToRead = () => {
 
     const getAdditionalInfo = () => {
         return (
-            <div>
-                <label>When did you start reading this book?  </label>
+            <dialog open id='dialog'>
+            <div className="dialogWindow">
+                <label className='label'>When did you start reading this book?  </label>
                 <input type="date" ref={date_startRef}/><br/>
-                <label>What kind of book do you read?  </label>
+                <label className='label'>What kind of book do you read?  </label>
                 <select id="book_type" ref={booktypeRef}>
                     <option value="Physical">Paper</option>
                     <option value="eBook">e-book</option>
                     <option value="Audiobook">Audiobook</option> 
                 </select><br/>
-                <label>How would you like to display your pages?  </label>
+                <label className='label'>How would you like to display your pages?  </label>
                 <select id="page_type" ref={pagetypeRef}>
                     <option value="Page">Page</option>
                     <option value="Percentage">Percentage</option>
                     <option value="Episode">Episode</option> 
                 </select><br/>
-                <label>Total pages: </label>
+                <label className='label'>Total pages: </label>
                 <input type='text' ref={pagecountRef} /><br/>
-                <button onClick={editBook}>Save</button>
+                <button className='button' onClick={editBook}>Save</button>
             </div>
+        </dialog>
         )
     }
 
     return (
         <>
         
-        {(!renderInputs)?<button onClick={()=> {setRenderInputs(true)}}>Start Reading</button> : <></>}
+       <button className='button'onClick={()=> {setRenderInputs(!renderInputs)}}>Start Reading</button>
         {(renderInputs)? getAdditionalInfo():<></>}
         </>
         

@@ -30,7 +30,7 @@ const DeleteBook = () => {
     }
 
     return (
-        <button onClick={handleDeleteBook}>Delete</button>
+        <button className='button' onClick={handleDeleteBook}>Delete</button>
     )
 }
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
 import { checkScore } from "../../utils/validations.js";
 
+
 const EditReading = () => {
   const book = useSelectorCurrentBook();
   const useSetMessageHook = useSetMessage();
@@ -45,6 +46,8 @@ const EditReading = () => {
   }
 
   const saveFinishedBook = async (): Promise<void> => {
+    const dialog = document.getElementById("dialog2") as HTMLDialogElement;
+    dialog.close();
     const score = Number(rateRef.current?.value);
     if (!score) {
       useSetMessageHook("Please enter a score");
@@ -84,11 +87,15 @@ const EditReading = () => {
   }
 
   const finishBook = () => {
-    return (<>
-      <label>How would you rate this book?  </label>
+    return (
+    <dialog open id="dialog2">
+      <div className="dialogWindow">
+      <label>How would you rate this book?  </label><br/>
       <input ref={rateRef}placeholder="0..5"/> <br/>
-      <button onClick={saveFinishedBook}>Save</button>
-    </>)
+      <button className='button'onClick={saveFinishedBook}>Save</button>
+      </div>
+  </dialog>
+    )
   };
 
   // edit the book - send request to server
@@ -122,15 +129,19 @@ const EditReading = () => {
   };
 
   const checkIfFinished = () => {
+    const dialog = document.getElementById("dialog1") as HTMLDialogElement;
+    dialog.close();
     if (progress < book.pagecount) saveProgress();
     else {setFinished(true);
       setRenderInputs(false);
     };
   };
 
+
   const getAdditionalInfo = () => {
     return (
-      <div>
+      <dialog open id='dialog1'>
+        <div className="dialogWindow">
         <p>How much did you read? </p>
         <select
           id="book_type"
@@ -142,28 +153,27 @@ const EditReading = () => {
           {options}
         </select>
         <br />
-        <button onClick={checkIfFinished}>Save</button>
-      </div>
-    );
+        <button className='button' onClick={checkIfFinished}>Save</button>
+        </div>
+        </dialog>)
   };
+
 
   return (
     <>
-      {!renderInputs ? (
-        <button
+        <button className="button"
           onClick={() => {
-            setRenderInputs(true);
+            setRenderInputs(!renderInputs);
           }}
         >
           Mark Progress
         </button>
-      ) : (
-        <></>
-      )}
       {renderInputs ? getAdditionalInfo() : <></>}
       {finished ? finishBook() : <></>}
     </>
   );
 };
+
+
 
 export default EditReading;

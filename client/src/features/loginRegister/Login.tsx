@@ -15,7 +15,7 @@ const Login = () => {
     const navigate = useNavigate();
 
 
-    const login =  async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
+    const login =  async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLButtonElement>):Promise<void> => {
         e.preventDefault();
         const username=usernameRef.current?.value;
         const password= passwordRef.current?.value;
@@ -45,19 +45,37 @@ const Login = () => {
         }
     }
 
+    const enter = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        if (event.keyCode === 13) {
+            login(event);
+        }
+    }
+
     return (
         <>
-        <Link to='/'><button>Back</button></Link>
-        <Link to='/register'><button>Register</button></Link>
+        <nav>
+            <Link to='/register'><button className='navButton'>Register</button></Link>
+            <Link to='/'><button className='navButton'>Back</button></Link>
+        </nav>
+        <div className='main'>
         <h1>Login</h1>
-        <form onSubmit={(event) => login(event)}>
-            <label >Username: </label>
-            <input type='text' name='username' ref={usernameRef}required/><br/>
-            <label >Password: </label>
-            <input type='password' name='password' ref={passwordRef}required/><br/>
-            <button type='submit' >Login</button>
+        <form onSubmit={(event) => login(event)} >
+            <div className='form'>
+            <div className='labels'> 
+                <label className='formLabel'>Username: </label> 
+                <label className='formLabel'>Password:  </label>
+            </div>
+            <div className='inputsDiv'>
+                <input type='text' className='inputs' ref={usernameRef}required/>
+                <input type='password' className='inputs'  ref={passwordRef}required/>
+            </div>   
+            </div>
+            <button className='button' type='submit' onKeyUp={(event) => enter(event)}>Login</button>
         </form>
-        <div id='errorMessage'>{message}</div>
+       
+
+        <div className='errorMessage'>{message}</div>
+        </div>
         </>
     )
 }
