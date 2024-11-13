@@ -76,3 +76,55 @@ export const BooksCompressedEmpty = {
             image: ''
         
 }
+
+export interface Reviews {
+    id: number,
+    title: string,
+    authors:string | null,
+    score:number,
+    image:string
+}
+
+export const emptyReview:Reviews = {
+    id: 0,
+    title: '',
+    authors:'',
+    score:0,
+    image:''
+}
+
+export interface ReviewFull {
+    id: number,
+    title: string,
+    authors: string | null,
+    score: number,
+    image: string,
+    summary: string,
+    thoughts: string,
+    quotes: string,
+    favorite_character: string,
+    why_favorite_character: string,
+    favorite_scene: string,
+    why_favorite_scene: string,
+    rating_hearts: number,
+    rating_fire: number,
+    rating_tears: number
+}
+
+export const emptyReviewFull: ReviewFull = {
+    id: 0,
+    title: '',
+    authors: '',
+    score: 0,
+    image: '',
+    summary: '',
+    thoughts: '',
+    quotes: '',
+    favorite_character: '',
+    why_favorite_character: '',
+    favorite_scene: '',
+    why_favorite_scene: '',
+    rating_hearts: 0,
+    rating_fire: 0,
+    rating_tears: 0
+}

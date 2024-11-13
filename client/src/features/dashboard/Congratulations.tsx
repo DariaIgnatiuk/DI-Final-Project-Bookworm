@@ -1,25 +1,43 @@
-
-import { useNavigate } from 'react-router-dom';
+import { useSelectorCurrentBook } from "./state/hooks.js";
+import { useNavigate } from "react-router-dom";
 
 const Congratulations = () => {
-    const navigate = useNavigate();
-    const randomNumber = Math.floor(Math.random() * (13)) + 1;
+  const navigate = useNavigate();
+  const randomNumber = Math.floor(Math.random() * 13) + 1;
+  const book = useSelectorCurrentBook();
 
-    return (
-        <>
-        <div className='main' >
+  const startReview = () => {
+    localStorage.setItem("book_id", book.id.toString());
+    navigate("/review/add");
+  };
+
+  return (
+    <>
+      <div className="main">
         <h1>Congratulations!</h1>
-        <img className='gif'src={`../../../congratulations/congratulations${randomNumber}.webp`}/>
-        <div className='reviewQuestion'>
-        <p>Would you like to add a review?</p>
-        <div>
-        <button className='button' onClick={()=>{navigate('/review/add')}}>Yes</button>
-        <button className='button' onClick={()=>{navigate('/dashboard')}}>No</button>
+        <img
+          className="gif"
+          src={`../../../congratulations/congratulations${randomNumber}.webp`}
+        />
+        <div className="reviewQuestion">
+          <p>Would you like to add a review?</p>
+          <div>
+            <button className="button" onClick={startReview}>
+              Yes
+            </button>
+            <button
+              className="button"
+              onClick={() => {
+                navigate("/dashboard");
+              }}
+            >
+              No
+            </button>
+          </div>
         </div>
-        </div>
-        </div>
-        </>
-    )
-}
+      </div>
+    </>
+  );
+};
 
 export default Congratulations;

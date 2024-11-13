@@ -27,7 +27,6 @@ const SearchForBooks = () => {
   const languageRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-
   const fetchBooks = async (): Promise<void> => {
     setMessage("");
     setBooks([[BooksCompressedEmpty]]);
@@ -124,83 +123,87 @@ const SearchForBooks = () => {
     }
   };
 
-  const addBook  = async (event:React.FormEvent<HTMLFormElement>) => {
+  const addBook = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const dialog = document.getElementById("dialog") as HTMLDialogElement;
     dialog.close();
-    const image = (imageRef.current?.value)? imageRef.current?.value : '/Missing-book-cover.jpg'
+    const image = imageRef.current?.value
+      ? imageRef.current?.value
+      : "/Missing-book-cover.jpg";
     try {
-        const response = await axios.post(`${BASE_URL}/books/add`,  
-            {
-                authors:authorRef.current?.value, 
-                booktype:'Physical', 
-                categories:categoriesRef.current?.value, 
-                date_finish:null, 
-                date_start: null,
-                description:descriptionRef.current?.value, 
-                image:image, 
-                language:languageRef.current?.value, 
-                pagecount:0, 
-                pagetype:'Page', 
-                publisher:publishedRef.current?.value, 
-                reading_progress:0,
-                score:null, 
-                status:'WantToRead', 
-                title:titleRef.current?.value, 
-                user_id:localStorage.getItem('user_id')
-            },
-            {withCredentials: true});
-        //set the books state to the response data
-        setMessage(response.data);
-        setTimeout(function() {
-            navigate('/dashboard');
-          }, 1500);   
-    } catch (error:any) {
-        console.log(error);
-        //show the error message
-        setMessage(error.message);
+      const response = await axios.post(
+        `${BASE_URL}/books/add`,
+        {
+          authors: authorRef.current?.value,
+          booktype: "Physical",
+          categories: categoriesRef.current?.value,
+          date_finish: null,
+          date_start: null,
+          description: descriptionRef.current?.value,
+          image: image,
+          language: languageRef.current?.value,
+          pagecount: 0,
+          pagetype: "Page",
+          publisher: publishedRef.current?.value,
+          reading_progress: 0,
+          score: null,
+          status: "WantToRead",
+          title: titleRef.current?.value,
+          user_id: localStorage.getItem("user_id"),
+        },
+        { withCredentials: true }
+      );
+      //set the books state to the response data
+      setMessage(response.data);
+      setTimeout(function () {
+        navigate("/dashboard");
+      }, 1500);
+    } catch (error: any) {
+      console.log(error);
+      //show the error message
+      setMessage(error.message);
     }
-}
+  };
 
-const closeDialog = () => {
+  const closeDialog = () => {
     const dialog = document.getElementById("dialog") as HTMLDialogElement;
     dialog.close();
-}
+  };
 
-
-const addManually = () => {
-        return (
-<dialog open id='dialog'>
-    <form onSubmit={(event) => addBook(event)}>
-    <div className='form'>
-        <div className='labels'> 
-            <label className='formLabel'>Title </label>
-            <label className='formLabel'>Author: </label> 
-            <label className='formLabel'>Description: </label>
-            <label className='formLabel'>Image link: </label>
-            <label className='formLabel'>Publisher: </label> 
-            <label className='formLabel'>Categories: </label> 
-            <label className='formLabel'>Language: </label> 
-        </div>
-        <div className='inputsDiv'>
-        <input type='text' className='inputs'  ref={titleRef}required/>
-        <input type='text' className='inputs' ref={authorRef} />
-        <input type='text' className='inputs'  ref={descriptionRef}/>
-        <input type='text' className='inputs'  ref={imageRef}/>
-       <input type='text' className='inputs' ref={publishedRef}/>
-       <input type='text' className='inputs'  ref={categoriesRef}/>
-       <input type='text' className='inputs'  ref={languageRef}/>
-        </div>
-    </div>
-    <button className='button' type='submit'>Add</button>
-    <button onClick={closeDialog} className="button">Cancel</button>
-    </form>
-    
-    
-          </dialog>
-        );
-    
-}
+  const addManually = () => {
+    return (
+      <dialog open id="dialog">
+        <form onSubmit={(event) => addBook(event)}>
+          <div className="form">
+            <div className="labels">
+              <label className="formLabel">Title </label>
+              <label className="formLabel">Author: </label>
+              <label className="formLabel">Description: </label>
+              <label className="formLabel">Image link: </label>
+              <label className="formLabel">Publisher: </label>
+              <label className="formLabel">Categories: </label>
+              <label className="formLabel">Language: </label>
+            </div>
+            <div className="inputsDiv">
+              <input type="text" className="inputs" ref={titleRef} required />
+              <input type="text" className="inputs" ref={authorRef} />
+              <input type="text" className="inputs" ref={descriptionRef} />
+              <input type="text" className="inputs" ref={imageRef} />
+              <input type="text" className="inputs" ref={publishedRef} />
+              <input type="text" className="inputs" ref={categoriesRef} />
+              <input type="text" className="inputs" ref={languageRef} />
+            </div>
+          </div>
+          <button className="button" type="submit">
+            Add
+          </button>
+          <button onClick={closeDialog} className="button">
+            Cancel
+          </button>
+        </form>
+      </dialog>
+    );
+  };
 
   return (
     <>
@@ -234,8 +237,15 @@ const addManually = () => {
               </b>
             </p>
             <p className="searchQuery">Didn't find the book? </p>
-            <button className="button" onClick={() => {setRender(!render)}}>Add manually</button>
-            {(render)? addManually() : <></>}
+            <button
+              className="button"
+              onClick={() => {
+                setRender(!render);
+              }}
+            >
+              Add manually
+            </button>
+            {render ? addManually() : <></>}
           </>
         ) : (
           <></>

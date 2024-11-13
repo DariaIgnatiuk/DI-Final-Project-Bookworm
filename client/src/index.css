@@ -3,16 +3,15 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-  font-family:  'Overpass', sans-serif;
+  font-family: "Overpass", sans-serif;
   font-size: 18px;
 }
 
-#root{
+#root {
   width: 100%;
-
 }
 
-nav{
+nav {
   background-color: #aad5c5;
   width: 100%;
   height: 30px;
@@ -36,7 +35,7 @@ footer {
   border: none;
   font-size: 16px;
   margin-right: 20px;
-  height:27px;
+  height: 27px;
   cursor: pointer;
 }
 
@@ -47,7 +46,7 @@ footer {
   flex-direction: column;
 }
 
-.mainByStatus{
+.mainByStatus {
   flex-grow: 1;
   padding: 10px;
   display: flex;
@@ -56,42 +55,43 @@ footer {
   justify-content: center;
 }
 
-h1, h4 {
+h1,
+h4 {
   align-self: center;
   margin-top: 35px;
 }
 
-#authHeader{
+#authHeader {
   align-self: center;
   margin-top: 100px;
 }
 
-#dashboardHeading{
+#dashboardHeading {
   align-self: center;
   margin-top: 0px;
   margin-bottom: 10px;
 }
 
 form {
-  margin:20px;
+  margin: 20px;
   align-self: center;
   display: flex;
   flex-direction: column;
 }
 
-.form{
+.form {
   display: flex;
   flex-direction: row;
 }
 
-.labels, .inputs {
+.labels,
+.inputs {
   display: flex;
   flex-direction: column;
 }
 
-
 .formLabel {
- margin:5px;
+  margin: 5px;
 }
 
 input {
@@ -99,7 +99,16 @@ input {
 }
 
 .inputs {
-  margin:5px;
+  margin: 5px;
+}
+
+textarea {
+  margin-top: 5px;
+}
+
+.reviewInput {
+  margin: 5px;
+  width: 670px;
 }
 
 .inputsDiv {
@@ -109,7 +118,7 @@ input {
   margin-bottom: 15px;
 }
 
-.inputsDivSearch{
+.inputsDivSearch {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -120,7 +129,7 @@ input {
   padding: 3px;
 }
 
-.titleAndStatusContainer{
+.titleAndStatusContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -128,7 +137,7 @@ input {
 
 .button {
   padding: 10px 20px;
-  margin-top:20px;
+  margin-top: 20px;
   background-color: #aad5c5;
   border: none;
   cursor: pointer;
@@ -136,22 +145,22 @@ input {
   align-self: center;
   font-size: 15px;
   border-radius: 5px;
-  margin:5px;
+  margin: 5px;
 }
 
-.gif{
+.gif {
   height: 300px;
-  width:400px;
+  width: 400px;
   align-self: center;
 }
 
-.reviewQuestion{
+.reviewQuestion {
   align-self: center;
 }
 
 .buttonBig {
   padding: 10px 20px;
-  margin-top:15px;
+  margin-top: 15px;
   background-color: #aad5c5;
   border: none;
   cursor: pointer;
@@ -159,7 +168,7 @@ input {
   align-self: center;
   font-size: 15px;
   border-radius: 5px;
-  margin:5px;
+  margin: 5px;
   margin-bottom: 15px;
 }
 
@@ -176,12 +185,11 @@ input {
 
 .searchQuery {
   align-self: center;
-  margin:10px;
+  margin: 10px;
 }
 
-.searchButtonAdd{
-  margin-left:20px;
-
+.searchButtonAdd {
+  margin-left: 20px;
 }
 
 .bookCollection {
@@ -192,7 +200,7 @@ input {
 .dashboardStatus {
   background-color: #aad5c5;
   height: 185px;
-  width:150px;
+  width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,37 +209,50 @@ input {
   margin-left: 25px;
 }
 
-
-.bookCard{
+.bookCard {
   background-color: hsl(60, 54%, 93%);
   height: 185px;
-  width:150px;
+  width: 150px;
   display: flex;
   justify-content: center;
   margin: 2px;
 }
 
-.bookCardBig{
+.bookCardBig {
   background-color: hsl(60, 54%, 93%);
-  margin:20px;
+  margin: 20px;
   display: flex;
   justify-content: center;
 }
 
-.bookCardBigImage{
+.reviewCardBig {
+  background-color: #ede0cc;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.bookCardBigImage {
   margin: 20px 50px;
 }
 
 .bookCardMedium {
   background-color: hsl(60, 54%, 93%);
-  width:500px;
+  width: 500px;
   margin: 20px;
   display: flex;
   border-radius: 5px;
 }
 
+.reviewCardMedium {
+  background-color: #ede0cc;
+  width: 500px;
+  margin: 20px;
+  display: flex;
+  border-radius: 5px;
+}
 
-.cardMediumImageContainer{
+.cardMediumImageContainer {
   width: 240px;
   height: 260px;
   display: flex;
@@ -239,7 +260,7 @@ input {
   align-items: center;
 }
 
-.buttonPervNext{
+.buttonPervNext {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -256,26 +277,25 @@ input {
 
 .bigImage {
   align-self: center;
-  height:300px;
+  height: 300px;
 }
 
-.statusBar{
+.statusBar {
   height: 33px;
   margin-left: 10px;
-
 }
 
-.statusBarBig{
+.statusBarBig {
   height: 45px;
   margin: 15px;
-  margin-right:25px;
+  margin-right: 25px;
 }
 
 .dashboardButton {
-  border:none;
+  border: none;
   background-color: hsl(60, 54%, 93%);
   height: 55px;
-  width:150px;
+  width: 150px;
   margin: 2px;
   border-radius: 5px;
   font-size: 14px;
@@ -287,20 +307,20 @@ input {
   text-decoration: none;
 }
 
-.mediumCardTitle{
+.mediumCardTitle {
   margin-left: 10px;
   margin-right: 10px;
   font-size: 20px;
   font-weight: 550;
-  color:black
+  color: black;
 }
 
-.description{
+.description {
   height: 202px;
   overflow-y: scroll;
 }
 
-.bookCardBigInfo{
+.bookCardBigInfo {
   font-weight: 599;
 }
 
@@ -309,14 +329,13 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;  
-
+  align-items: center;
 }
 
-.mediumCardAuthor{
+.mediumCardAuthor {
   margin-left: 10px;
   font-size: 14px;
-  color:black
+  color: black;
 }
 
 .label {
@@ -330,8 +349,7 @@ dialog {
   transform: translate(-50%, -50%);
 }
 
-
-#logo_image{
+#logo_image {
   align-self: center;
 }
 
@@ -352,7 +370,11 @@ dialog {
   align-self: center;
 }
 
-/* need this!! */
+.imgIcon {
+  width: 30px;
+  height: 30px;
+  margin: 3px 3px;
+}
 .progress-bar {
   margin-top: 10px;
 
@@ -366,4 +388,3 @@ dialog {
   height: 100%;
   background-color: green;
 }
-

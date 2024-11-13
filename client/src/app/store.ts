@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import booksReducer from '../features/dashboard/state/slice'
+import booksReducer from "../features/dashboard/state/slice";
 import { BooksReducerState } from "../features/dashboard/state/slice";
 
 const combineReducersApp = combineReducers({ booksReducer });

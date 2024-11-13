@@ -2,7 +2,14 @@ import { useAppDispatch, useAppSelector } from "../../../app/reduxHooks";
 import { useCallback } from "react";
 import { setBooks, setMessage, setCurrentBook } from "./slice";
 import { bookSmall, bookExpanded } from "../../../types";
-import {selectBooksFinished, selectBooksReading, selectBooksWantToRead, selectAllBooks, selectMessage, selectCurrentBook} from './selectors'
+import {
+  selectBooksFinished,
+  selectBooksReading,
+  selectBooksWantToRead,
+  selectAllBooks,
+  selectMessage,
+  selectCurrentBook,
+} from "./selectors";
 
 // set books collection
 export const useSetBooks = () => {
@@ -38,25 +45,25 @@ export const useSetCurrentBook = () => {
 };
 
 export const useSelectorBooksFinished = () => {
-    return useAppSelector(selectBooksFinished)
-}
+  return useAppSelector(selectBooksFinished);
+};
 
 export const useSelectorBooksReading = () => {
-    return useAppSelector(selectBooksReading)
-}
+  return useAppSelector(selectBooksReading);
+};
 
 export const useSelectorBooksWantToRead = () => {
-    return useAppSelector(selectBooksWantToRead)
-}
+  return useAppSelector(selectBooksWantToRead);
+};
 
 export const useSelectorAllBooks = () => {
-  return useAppSelector(selectAllBooks)
-}
+  return useAppSelector(selectAllBooks);
+};
 
 export const useSelectorMessage = () => {
-  return useAppSelector(selectMessage)
-}
+  return useAppSelector(selectMessage);
+};
 
 export const useSelectorCurrentBook = () => {
-  return useAppSelector(selectCurrentBook)
-}
+  return useAppSelector(selectCurrentBook);
+};

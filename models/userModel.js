@@ -2,7 +2,14 @@ const { db } = require("../config/db.js");
 const bcrypt = require("bcrypt");
 
 module.exports = {
-  createUser: async (first_name, family_name, username, password, email, date_of_birth) => {
+  createUser: async (
+    first_name,
+    family_name,
+    username,
+    password,
+    email,
+    date_of_birth
+  ) => {
     const trx = await db.transaction();
     try {
       /** hash password */
@@ -15,9 +22,9 @@ module.exports = {
           username,
           email: email.toLowerCase(),
           password: hashPassword,
-          date_of_birth
+          date_of_birth,
         },
-        ["id","first_name","family_name","username","email"]
+        ["id", "first_name", "family_name", "username", "email"]
       );
 
       await trx.commit();
@@ -32,7 +39,14 @@ module.exports = {
   getUserByUsername: async (username) => {
     try {
       const user = await db("users")
-        .select("id","first_name","family_name","username","email", "password")
+        .select(
+          "id",
+          "first_name",
+          "family_name",
+          "username",
+          "email",
+          "password"
+        )
         .where({ username: username })
         .first();
       return user;

@@ -55,28 +55,30 @@ const EditFinished = () => {
 
   const getAdditionalInfo = () => {
     return (
-        <dialog open id='dialog'>
-      <div className="dialogWindow">
-        <p>My rating for this book: {book.score}</p>
-        <p>I would like to change it to: </p>
-        <input type="text" ref={scoreRef} />
-        <br />
-        <button className='button'onClick={editBook}>Save</button>
-      </div>
+      <dialog open id="dialog">
+        <div className="dialogWindow">
+          <p>My rating for this book: {book.score}</p>
+          <p>I would like to change it to: </p>
+          <input type="text" ref={scoreRef} />
+          <br />
+          <button className="button" onClick={editBook}>
+            Save
+          </button>
+        </div>
       </dialog>
     );
   };
 
   return (
     <>
-        <button
+      <button
         className="button"
-          onClick={() => {
-            setRenderInputs(!renderInputs);
-          }}
-        >
-          Change rating
-        </button>
+        onClick={() => {
+          setRenderInputs(!renderInputs);
+        }}
+      >
+        Change rating
+      </button>
       {renderInputs ? getAdditionalInfo() : <></>}
     </>
   );

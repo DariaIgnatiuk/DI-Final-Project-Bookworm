@@ -9,7 +9,8 @@ const verifyToken = (req, res, next) => {
   if (!token) return res.status(401).json({ message: "unauthorized" });
 
   jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decoded) => {
-    if (err) return res.status(403).json({ message: "forbidden", err: err.message });
+    if (err)
+      return res.status(403).json({ message: "forbidden", err: err.message });
 
     const { userid, email } = decoded;
 

@@ -5,7 +5,6 @@ import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
 import { checkScore } from "../../utils/validations.js";
 
-
 const EditReading = () => {
   const book = useSelectorCurrentBook();
   const useSetMessageHook = useSetMessage();
@@ -69,7 +68,7 @@ const EditReading = () => {
           pagetype: book.pagetype,
           reading_progress: progress,
           score: score,
-          status: 'Finished',
+          status: "Finished",
         },
         { withCredentials: true }
       );
@@ -77,25 +76,28 @@ const EditReading = () => {
       useSetMessageHook(response.data.message);
       setTimeout(function () {
         useSetMessageHook("");
-        navigate('/books/congratulations')
+        navigate("/books/congratulations");
       }, 1500);
     } catch (error: any) {
       console.log(error);
       // show the error message
       useSetMessageHook(error.message);
     }
-  }
+  };
 
   const finishBook = () => {
     return (
-    <dialog open id="dialog2">
-      <div className="dialogWindow">
-      <label>How would you rate this book?  </label><br/>
-      <input ref={rateRef}placeholder="0..5"/> <br/>
-      <button className='button'onClick={saveFinishedBook}>Save</button>
-      </div>
-  </dialog>
-    )
+      <dialog open id="dialog2">
+        <div className="dialogWindow">
+          <label>How would you rate this book? </label>
+          <br />
+          <input ref={rateRef} placeholder="0..5" /> <br />
+          <button className="button" onClick={saveFinishedBook}>
+            Save
+          </button>
+        </div>
+      </dialog>
+    );
   };
 
   // edit the book - send request to server
@@ -132,48 +134,49 @@ const EditReading = () => {
     const dialog = document.getElementById("dialog1") as HTMLDialogElement;
     dialog.close();
     if (progress < book.pagecount) saveProgress();
-    else {setFinished(true);
+    else {
+      setFinished(true);
       setRenderInputs(false);
-    };
+    }
   };
-
 
   const getAdditionalInfo = () => {
     return (
-      <dialog open id='dialog1'>
+      <dialog open id="dialog1">
         <div className="dialogWindow">
-        <p>How much did you read? </p>
-        <select
-          id="book_type"
-          value={progress}
-          onChange={(e) => {
-            setProgress(Number(e.target.value));
-          }}
-        >
-          {options}
-        </select>
-        <br />
-        <button className='button' onClick={checkIfFinished}>Save</button>
+          <p>How much did you read? </p>
+          <select
+            id="book_type"
+            value={progress}
+            onChange={(e) => {
+              setProgress(Number(e.target.value));
+            }}
+          >
+            {options}
+          </select>
+          <br />
+          <button className="button" onClick={checkIfFinished}>
+            Save
+          </button>
         </div>
-        </dialog>)
+      </dialog>
+    );
   };
-
 
   return (
     <>
-        <button className="button"
-          onClick={() => {
-            setRenderInputs(!renderInputs);
-          }}
-        >
-          Mark Progress
-        </button>
+      <button
+        className="button"
+        onClick={() => {
+          setRenderInputs(!renderInputs);
+        }}
+      >
+        Mark Progress
+      </button>
       {renderInputs ? getAdditionalInfo() : <></>}
       {finished ? finishBook() : <></>}
     </>
   );
 };
-
-
 
 export default EditReading;

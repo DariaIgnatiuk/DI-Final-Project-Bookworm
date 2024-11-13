@@ -1,15 +1,14 @@
 const { db } = require("../config/db.js");
-const axios = require('axios');
-require('dotenv').config();
-const {API_KEY} = process.env;
-
+const axios = require("axios");
+require("dotenv").config();
+const { API_KEY } = process.env;
 
 module.exports = {
   getAllBooksByUserId: async (user_id) => {
     try {
       const books = await db("books")
-        .select("id","title","authors","image", "status","reading_progress")
-        .where({ user_id: user_id })
+        .select("id", "title", "authors", "image", "status", "reading_progress")
+        .where({ user_id: user_id });
       return books;
     } catch (error) {
       throw error;
@@ -18,8 +17,8 @@ module.exports = {
   getBooksByStatus: async (user_id, status) => {
     try {
       const books = await db("books")
-        .select("id","title","authors","image", "status","reading_progress")
-        .where({ user_id: user_id, status: status })
+        .select("id", "title", "authors", "image", "status", "reading_progress")
+        .where({ user_id: user_id, status: status });
       return books;
     } catch (error) {
       throw error;
@@ -28,18 +27,36 @@ module.exports = {
   getBookById: async (id) => {
     try {
       const book = await db("books")
-      .select("id","title","authors","publisher", "description","image","categories","language","booktype","pagetype" ,"pagecount", "status","reading_progress", 
-        "date_start", "date_finish", "score"  )
-      .where({ id:id })
-      .first();
-      return book
+        .select(
+          "id",
+          "title",
+          "authors",
+          "publisher",
+          "description",
+          "image",
+          "categories",
+          "language",
+          "booktype",
+          "pagetype",
+          "pagecount",
+          "status",
+          "reading_progress",
+          "date_start",
+          "date_finish",
+          "score"
+        )
+        .where({ id: id })
+        .first();
+      return book;
     } catch (error) {
       throw error;
     }
   },
   searchBooks: async (title, authors) => {
     try {
-      const books = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${authors}&intitle:${title}&maxResults=40&key=${API_KEY}`);
+      const books = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=inauthor:${authors}&intitle:${title}&maxResults=40&key=${API_KEY}`
+      );
       return books.data;
     } catch (error) {
       throw error;
@@ -47,23 +64,53 @@ module.exports = {
   },
   searchBookById: async (id) => {
     try {
-      const book = await axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`);
+      const book = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes/${id}`
+      );
       return book.data;
     } catch (error) {
       throw error;
     }
   },
   // add a book to the DB
-  addBook: async (authors, booktype, categories, date_finish,date_start,
-    description, image, language, pagecount, pagetype, publisher, reading_progress,
-    score, status, title, user_id) => {
+  addBook: async (
+    authors,
+    booktype,
+    categories,
+    date_finish,
+    date_start,
+    description,
+    image,
+    language,
+    pagecount,
+    pagetype,
+    publisher,
+    reading_progress,
+    score,
+    status,
+    title,
+    user_id
+  ) => {
     const trx = await db.transaction();
     try {
       const [book] = await trx("books").insert(
         {
-          authors, booktype, categories, date_finish,date_start,
-          description, image, language, pagecount, pagetype, publisher, reading_progress,
-          score, status, title, user_id
+          authors,
+          booktype,
+          categories,
+          date_finish,
+          date_start,
+          description,
+          image,
+          language,
+          pagecount,
+          pagetype,
+          publisher,
+          reading_progress,
+          score,
+          status,
+          title,
+          user_id,
         },
         ["id"]
       );
@@ -79,7 +126,7 @@ module.exports = {
   removeBook: async (id) => {
     const trx = await db.transaction();
     try {
-      await trx('books').where({ id:id }).del();
+      await trx("books").where({ id: id }).del();
       await trx.commit();
       return { message: "Book removed successfully" };
     } catch (error) {
@@ -88,12 +135,20 @@ module.exports = {
       throw error;
     }
   },
-  editBook: async (id, booktype, date_finish, date_start, pagecount, pagetype, reading_progress, score, status) => {
+  editBook: async (
+    id,
+    booktype,
+    date_finish,
+    date_start,
+    pagecount,
+    pagetype,
+    reading_progress,
+    score,
+    status
+  ) => {
     const trx = await db.transaction();
     try {
-      const updatedBook = await trx("books")
-      .where({ id:id })
-      .update(
+      const updatedBook = await trx("books").where({ id: id }).update(
         {
           booktype,
           date_finish,
@@ -104,7 +159,7 @@ module.exports = {
           score,
           status,
         },
-        
+
         ["*"]
       );
       await trx.commit();
@@ -115,16 +170,4 @@ module.exports = {
       throw error;
     }
   },
-
 };
-
-
-
-
-
-
-
-
- 
-
-
