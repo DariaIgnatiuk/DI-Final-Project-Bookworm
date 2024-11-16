@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ExplicitAppState } from "../../../app/store";
-import { bookSmall, bookExpanded, emptyBookExpanded } from "../../../types";
+import { bookSmall, bookExpanded, emptyBookExpanded, bookSmallEmpty } from "../../../types";
 
 export type BooksReducerState = {
   books: bookSmall[];
@@ -9,16 +9,7 @@ export type BooksReducerState = {
 };
 
 const initialState: BooksReducerState = {
-  books: [
-    {
-      id: 0,
-      title: "",
-      authors: "",
-      image: "",
-      status: "",
-      reading_progress: "",
-    },
-  ],
+  books: [bookSmallEmpty],
   message: "",
   currentBook: emptyBookExpanded,
 };

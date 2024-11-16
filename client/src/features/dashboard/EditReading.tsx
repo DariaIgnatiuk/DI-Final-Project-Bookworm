@@ -1,9 +1,8 @@
 import { useSelectorCurrentBook, useSetMessage } from "./state/hooks.js";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
-import { checkScore } from "../../utils/validations.js";
 
 const EditReading = () => {
   const book = useSelectorCurrentBook();
@@ -11,8 +10,8 @@ const EditReading = () => {
   const [renderInputs, setRenderInputs] = useState(false);
   const [progress, setProgress] = useState(book.reading_progress);
   const [finished, setFinished] = useState(false);
+  const [score, setScore] = useState(0);
   const navigate = useNavigate();
-  const rateRef = useRef<HTMLInputElement>(null);
   const options: JSX.Element[] = [
     <option key={0} value={0}>
       0
@@ -44,25 +43,35 @@ const EditReading = () => {
     }
   }
 
+  const returnScore = () => {
+    const numbers = [1, 2, 3, 4, 5];
+    return numbers.map((num, index) =>
+        num <= score ? (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/star.svg"
+          />
+        ) : (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/emptyStar.svg"
+          />
+        )
+      );
+    };
+
   const saveFinishedBook = async (): Promise<void> => {
     const dialog = document.getElementById("dialog2") as HTMLDialogElement;
     dialog.close();
-    const score = Number(rateRef.current?.value);
-    if (!score) {
-      useSetMessageHook("Please enter a score");
-      return;
-    }
-    if (!checkScore(score)) {
-      useSetMessageHook("Score can not be higher than 5 or lower than 0");
-      return;
-    }
     const date_finish = new Date();
     try {
       const response = await axios.put(
         `${BASE_URL}/books/edit/${book.id}`,
         {
           booktype: book.booktype,
-          date_finish: date_finish.getDate(),
+          date_finish: date_finish.toLocaleDateString(),
           date_start: book.date_start,
           pagecount: book.pagecount,
           pagetype: book.pagetype,
@@ -91,7 +100,9 @@ const EditReading = () => {
         <div className="dialogWindow">
           <label>How would you rate this book? </label>
           <br />
-          <input ref={rateRef} placeholder="0..5" /> <br />
+          <div>{returnScore()}</div>
+
+          {/* <input ref={rateRef} placeholder="0..5" /> <br /> */}
           <button className="button" onClick={saveFinishedBook}>
             Save
           </button>
@@ -103,7 +114,7 @@ const EditReading = () => {
   // edit the book - send request to server
   const saveProgress = async (): Promise<void> => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `${BASE_URL}/books/edit/${book.id}`,
         {
           booktype: book.booktype,
@@ -118,11 +129,7 @@ const EditReading = () => {
         { withCredentials: true }
       );
       //set the books state to the response data
-      useSetMessageHook(response.data.message);
-      setTimeout(function () {
-        useSetMessageHook("");
-        window.location.reload();
-      }, 1500);
+      window.location.reload();
     } catch (error: any) {
       console.log(error);
       // show the error message

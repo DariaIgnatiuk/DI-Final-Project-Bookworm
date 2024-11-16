@@ -15,14 +15,22 @@ const compressBooks = (books) => {
 
 // Return the compressed single book
 const compressSingleBook = (book) => {
-  const result = {
-    authors: book.volumeInfo.authors.join(",  "),
+
+  
+  let categories = undefined;
+  if (book.volumeInfo.categories) categories = book.volumeInfo.categories.join(", ");
+  let authors = undefined;
+  if (book.volumeInfo.authors) authors = book.volumeInfo.authors.join(", ");
+  let description = undefined;
+  if (book.volumeInfo.description) description = book.volumeInfo.description.replace(/<[^>]*>/g, "");
+  let result = {
+    authors: authors,
     booktype: "Physical",
-    categories: book.volumeInfo.categories.join(", "),
+    categories: categories,
     date_finish: null,
     date_start: null,
     // deleting all html tags from the book description
-    description: book.volumeInfo.description.replace(/<[^>]*>/g, ""),
+    description: description,
     image: book.volumeInfo.imageLinks.thumbnail,
     language: book.volumeInfo.language,
     pagecount: book.volumeInfo.pageCount,

@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
 import { emptyBookExpanded } from "../../types";
 import { useNavigate } from "react-router-dom";
+import Navigation from "../navigation/Navigation";
 
 const AddReview = () => {
   const id = Number(localStorage.getItem("book_id"));
@@ -12,11 +13,14 @@ const AddReview = () => {
   const [heart, setHeart] = useState(0);
   const [fire, setFire] = useState(0);
   const [tear, setTear] = useState(0);
+  const [score, setScore] = useState(0);
   const characterRef = useRef<HTMLInputElement>(null);
   const whyCharacterRef = useRef<HTMLInputElement>(null);
   const sceneRef = useRef<HTMLInputElement>(null);
   const whySceneRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  
+
 
   //fetch the book by id
   const fetchBook = async (): Promise<void> => {
@@ -26,6 +30,7 @@ const AddReview = () => {
       });
       //set the book state to the response data
       setBook(response.data);
+      setScore(response.data.score);
     } catch (error: any) {
       // show the error message
       setMessage(error.response.data.message);
@@ -37,15 +42,39 @@ const AddReview = () => {
     fetchBook();
   }, []);
 
-  const returnScore = (score: number) => {
-    return numbers.map((num) =>
-      num <= score ? (
-        <img className="imgIcon" src="../../../rating/star.svg" />
-      ) : (
-        <img className="imgIcon" src="../../../rating/emptyStar.svg" />
-      )
-    );
-  };
+  const saveEditedScore = async (): Promise<void> => {
+    try {
+ await axios.put(
+   `${BASE_URL}/books/editScore/${book.id}`,
+   {
+     score: score,
+   },
+   { withCredentials: true }
+ );
+} catch (error: any) {
+ console.log(error);
+ // show the error message
+ setMessage(error.message);
+}   
+}
+
+  const returnScore = () => {
+    return numbers.map((num, index) =>
+        num <= score ? (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/star.svg"
+          />
+        ) : (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/emptyStar.svg"
+          />
+        )
+      );
+    };
 
   const returnHearts = () => {
     return numbers.map((num, index) =>
@@ -102,6 +131,7 @@ const AddReview = () => {
   };
 
   const saveReview = async (): Promise<void> => {
+    if (score != book.score) saveEditedScore();
     const summary = document.getElementById("summary") as HTMLInputElement;
     const thoughts = document.getElementById("thoughts") as HTMLInputElement;
     const quotes = document.getElementById("quotes") as HTMLInputElement;
@@ -135,12 +165,13 @@ const AddReview = () => {
 
   return (
     <>
+    <Navigation/>
       <div className="reviewCardBig">
         <div className="bookCardBigImage">
           <img className="bigImage" src={book.image} />
           <br />
           <br />
-          {book.score ? returnScore(book.score) : <></>}
+          {returnScore()}
           <br />
           {returnHearts()}
           <br />

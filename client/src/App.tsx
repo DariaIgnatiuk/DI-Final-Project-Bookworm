@@ -13,6 +13,7 @@ import AddReview from "./features/review/AddReview";
 import AllReviews from "./features/review/AllReviews";
 import ReviewById from "./features/review/ReviewById";
 import { Route, Routes } from "react-router-dom";
+import EditReview from "./features/review/EditReview";
 
 function App() {
   return (
@@ -90,6 +91,14 @@ function App() {
           element={
             <Auth>
               <ReviewById />
+            </Auth>
+          }
+        />
+                <Route
+          path="/review/edit/:id"
+          element={
+            <Auth>
+              <EditReview />
             </Auth>
           }
         />

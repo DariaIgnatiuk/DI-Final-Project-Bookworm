@@ -16,5 +16,7 @@ router.post("/add", bookController.addBook);
 router.delete("/remove/:id", bookController.removeBook);
 // edit books
 router.put("/edit/:id", bookController.editBook);
+// edit book rating
+router.put("/editscore/:id", bookController.editBookScore);
 
 module.exports = router;

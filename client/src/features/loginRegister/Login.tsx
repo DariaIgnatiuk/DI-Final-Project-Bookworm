@@ -16,8 +16,8 @@ const Login = () => {
     e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLButtonElement>
   ): Promise<void> => {
     e.preventDefault();
-    const username = usernameRef.current?.value;
-    const password = passwordRef.current?.value;
+    const username = usernameRef.current?.value.trim();
+    const password = passwordRef.current?.value.trim();
     try {
       const response = await axios.post(
         `${BASE_URL}/user/login`,

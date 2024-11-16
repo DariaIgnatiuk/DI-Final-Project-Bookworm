@@ -62,7 +62,10 @@ module.exports = {
     const id = req.params.id;
     try {
       const book = await bookModel.searchBookById(id);
+      console.log(book);
+      
       if (book) res.status(200).json(compressSingleBook(book));
+      // else if res.status(400) res.status(400).json({ message: "Book not found" });
       else res.status(404).json({ message: "Book not found" });
     } catch (error) {
       console.log(error);
@@ -120,7 +123,7 @@ module.exports = {
     const id = req.params.id;
     try {
       await bookModel.removeBook(id);
-      res.status(200).json(`Book removed successfully!`);
+      res.status(200).json(`Book was removed successfully!`);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "internal server error" });
@@ -149,6 +152,24 @@ module.exports = {
         reading_progress,
         score,
         status
+      );
+      res
+        .status(201)
+        .json({ message: `Changes were saved successfully!`, book: book });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "internal server error" });
+    }
+  },
+  editBookScore: async (req, res) => {
+    const {
+      score,
+    } = req.body;
+    const id = req.params.id;
+    try {
+      const book = await bookModel.editBookScore(
+        id,
+        score
       );
       res
         .status(201)

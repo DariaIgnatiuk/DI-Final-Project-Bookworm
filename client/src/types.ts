@@ -12,7 +12,9 @@ export interface bookSmall {
     authors: string | null,
     image: string, 
     status: string,
-    reading_progress: string | null
+    reading_progress: number,
+    pagecount: number,
+    score: number | null,
 }
 
 export const bookSmallEmpty:bookSmall = {
@@ -21,7 +23,9 @@ export const bookSmallEmpty:bookSmall = {
     authors: '',
     image: '', 
     status: '',
-    reading_progress: ''
+    reading_progress: 0,
+    pagecount: 0,
+    score: 0,
 }
 
 export interface bookExpanded {
@@ -57,7 +61,7 @@ export const emptyBookExpanded: bookExpanded= {
     pagetype:  null,
     publisher:  null,
     reading_progress: 0,
-    score: null,
+    score: 0,
     status: null,
     title: '',
 }
@@ -108,7 +112,8 @@ export interface ReviewFull {
     why_favorite_scene: string,
     rating_hearts: number,
     rating_fire: number,
-    rating_tears: number
+    rating_tears: number,
+    book_id:number
 }
 
 export const emptyReviewFull: ReviewFull = {
@@ -126,5 +131,6 @@ export const emptyReviewFull: ReviewFull = {
     why_favorite_scene: '',
     rating_hearts: 0,
     rating_fire: 0,
-    rating_tears: 0
+    rating_tears: 0,
+    book_id:0
 }

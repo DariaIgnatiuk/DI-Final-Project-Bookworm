@@ -8,7 +8,10 @@ import {
   useSelectorBooksFinished,
   useSelectorBooksReading,
   useSelectorBooksWantToRead,
+  useSelectorAllBooks,
 } from "./state/hooks";
+import { bookSmall } from "../../types";
+import { ReactNode } from "react";
 
 const Dashboard = () => {
   // get user data from localStorage
@@ -18,19 +21,8 @@ const Dashboard = () => {
   const [message, setMessage] = useState("");
   const useSetBooksHook = useSetBooks();
   const navigate = useNavigate();
-  let booksReading = useSelectorBooksReading();
-  // show only the first 5 book from the list
-  if (booksReading.length > 7) {
-    booksReading = booksReading.slice(0, 7);
-  }
-  let booksWantToRead = useSelectorBooksWantToRead();
-  if (booksWantToRead.length > 7) {
-    booksWantToRead = booksWantToRead.slice(0, 7);
-  }
-  let booksFinished = useSelectorBooksFinished();
-  if (booksFinished.length > 7) {
-    booksFinished = booksFinished.slice(0, 7);
-  }
+  // number of books of the user's collection
+  const numberOfBooks = useSelectorAllBooks().length;
 
   // fetch all books for the user
   const fetchAllBooks = async (): Promise<void> => {
@@ -56,6 +48,102 @@ const Dashboard = () => {
     fetchAllBooks();
   }, []);
 
+  // checks if the user has 0 books
+  const checkIfZeroBooks = () => {
+    if (useSelectorAllBooks().length === 0)
+      return (
+        <div id="zeroBooks">
+          <p>You don't have any books in your collection yet</p>
+          <Link to="/books/search">
+            <button className="button">Add a book</button>
+          </Link>
+        </div>
+      );
+  };
+
+  // renders one book
+  const renderOneBook = (book: bookSmall) => {
+    return (
+      <Link to={`/book/${book.id}`}>
+        <div className="bookCard">
+          <img
+            className="smallImage"
+            key={book.id}
+            src={book.image}
+            alt={book.title}
+          />
+        </div>
+      </Link>
+    );
+  };
+
+  // in there are books with status Reading, render them
+  const renderBooksReading = (): ReactNode => {
+    let booksReading = useSelectorBooksReading();
+    // show only the first 7 book from the list
+    if (booksReading.length > 7) {
+      booksReading = booksReading.slice(0, 7);
+    }
+    // render the books if there are books with this status
+    if (booksReading.length != 0)
+      return (
+        <div className="bookCollection">
+          <div className="dashboardStatus">Reading</div>
+          {booksReading.map((book) => renderOneBook(book))}
+          <button
+            className="dashboardButton"
+            onClick={() => navigate("/books/reading")}
+          >
+            View all
+          </button>
+        </div>
+      );
+  };
+
+  // in there are books with status Finished, render them
+  const renderBooksFinished = (): ReactNode => {
+    let booksFinished = useSelectorBooksFinished();
+    if (booksFinished.length > 7) {
+      booksFinished = booksFinished.slice(0, 7);
+    }
+    // render the books if there are books with this status
+    if (booksFinished.length != 0)
+      return (
+        <div className="bookCollection">
+          <div className="dashboardStatus">Finished</div>
+          {booksFinished.map((book) => renderOneBook(book))}
+          <button
+            className="dashboardButton"
+            onClick={() => navigate("/books/finished")}
+          >
+            View all
+          </button>
+        </div>
+      );
+  };
+
+  // in there are books with status Want to read, render them
+  const renderBooksWantToRead = (): ReactNode => {
+    let booksWantToRead = useSelectorBooksWantToRead();
+    if (booksWantToRead.length > 7) {
+      booksWantToRead = booksWantToRead.slice(0, 7);
+    }
+    // render the books if there are books with this status
+    if (booksWantToRead.length != 0)
+      return (
+        <div className="bookCollection">
+          <div className="dashboardStatus">Wanto to Read</div>
+          {booksWantToRead.map((book) => renderOneBook(book))}
+          <button
+            className="dashboardButton"
+            onClick={() => navigate("/books/wanttoread")}
+          >
+            View all
+          </button>
+        </div>
+      );
+  };
+
   return (
     <>
       <nav>
@@ -72,87 +160,14 @@ const Dashboard = () => {
           Welcome to your Dashboard, {user_first_name} !
         </h3>
 
-        {/* if there are books with status = Reading, display them */}
-        {booksReading.length != 0 ? (
-          <div className="bookCollection">
-            <div className="dashboardStatus">Reading</div>
-            {booksReading.map((book) => (
-              <Link to={`/book/${book.id}`}>
-                <div className="bookCard">
-                  <img
-                    className="smallImage"
-                    key={book.id}
-                    src={book.image}
-                    alt={book.title}
-                  />
-                </div>
-              </Link>
-            ))}
-            <button
-              className="dashboardButton"
-              onClick={() => navigate("/books/reading")}
-            >
-              View all
-            </button>
-          </div>
+        {/* if the  user doesn't have any books, show a message, in they do, render books*/}
+        {numberOfBooks === 0 ? (
+          checkIfZeroBooks()
         ) : (
-          <></>
-        )}
-
-        {/* if there are books with status = Finished, display them */}
-        {booksFinished.length != 0 ? (
-          <div className="bookCollection">
-            <div className="dashboardStatus">
-              <p className="status">Finished</p>
-            </div>
-            {booksFinished.map((book) => (
-              <Link to={`/book/${book.id}`}>
-                <div className="bookCard">
-                  <img
-                    className="smallImage"
-                    key={book.id}
-                    src={book.image}
-                    alt={book.title}
-                  />
-                </div>
-              </Link>
-            ))}
-            <button
-              className="dashboardButton"
-              onClick={() => navigate("/books/finished")}
-            >
-              View all
-            </button>
-          </div>
-        ) : (
-          <></>
-        )}
-
-        {/* if there are books with status = WantToRead, display them */}
-        {booksWantToRead.length != 0 ? (
-          <div className="bookCollection">
-            <div className="dashboardStatus">Want to read</div>
-            {booksWantToRead.map((book) => (
-              <Link to={`/book/${book.id}`}>
-                <div className="bookCard">
-                  <img
-                    className="smallImage"
-                    key={book.id}
-                    src={book.image}
-                    alt={book.title}
-                  />
-                </div>
-              </Link>
-            ))}
-            <button
-              className="dashboardButton"
-              onClick={() => navigate("/books/wanttoread")}
-            >
-              View all
-            </button>
-          </div>
-        ) : (
-          <></>
+          <>
+            {renderBooksReading()} {renderBooksFinished()}{" "}
+            {renderBooksWantToRead()}
+          </>
         )}
 
         <div className="errorMessage">{message}</div>

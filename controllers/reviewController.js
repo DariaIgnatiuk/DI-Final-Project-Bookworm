@@ -52,11 +52,55 @@ module.exports = {
     const id = req.params.id;
     try {
       const review = await reviewModel.geReviewsById(id);
-      console.log(review);
-
       res.status(201).json(review);
     } catch (error) {
       console.log(error);
+    }
+  },
+  removeReview: async (req, res) => {
+    const id = Number(req.params.id);
+    try {
+      await reviewModel.removeReview(id);
+      res.status(200).json(`Review was removed successfully!`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "internal server error" });
+    }
+  },
+  editReview: async (req, res) => {
+    const {
+      summary,
+      thoughts,
+      quotes,
+      favorite_character,
+      why_favorite_character,
+      favorite_scene,
+      why_favorite_scene,
+      rating_hearts,
+      rating_fire,
+      rating_tears
+    } = req.body;
+    const id = req.params.id;
+    try {
+      const review = await reviewModel.editReview(
+        id,
+        summary,
+        thoughts,
+        quotes,
+        favorite_character,
+        why_favorite_character,
+        favorite_scene,
+        why_favorite_scene,
+        rating_hearts,
+        rating_fire,
+        rating_tears
+      );
+      res
+        .status(201)
+        .json({ message: `Changes were saved successfully!`, review: review });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "internal server error" });
     }
   },
 };

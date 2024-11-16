@@ -77,12 +77,65 @@ module.exports = {
           "reviews.why_favorite_scene",
           "reviews.rating_hearts",
           "reviews.rating_fire",
-          "reviews.rating_tears"
+          "reviews.rating_tears",
+        "reviews.book_id"
         )
         .join("books", "books.id", "reviews.book_id")
         .where({ "reviews.id": id });
       return reviews;
     } catch (error) {
+      throw error;
+    }
+  },
+  removeReview: async (id) => {
+    console.log(id)
+    const trx = await db.transaction();
+    try {
+      await trx("reviews").where({ id: id }).del();
+      await trx.commit();
+      return { message: "Review was removed successfully" };
+    } catch (error) {
+      await trx.rollback();
+      console.log(error);
+      throw error;
+    }
+  },
+  editReview: async (
+    id,
+    summary,
+    thoughts,
+    quotes,
+    favorite_character,
+    why_favorite_character,
+    favorite_scene,
+    why_favorite_scene,
+    rating_hearts,
+    rating_fire,
+    rating_tears
+  ) => {
+    const trx = await db.transaction();
+    try {
+      const updatedReview = await trx("reviews").where({ id: id }).update(
+        {
+          summary,
+          thoughts,
+          quotes,
+          favorite_character,
+          why_favorite_character,
+          favorite_scene,
+          why_favorite_scene,
+          rating_hearts,
+          rating_fire,
+          rating_tears
+        },
+
+        ["*"]
+      );
+      await trx.commit();
+      return updatedReview;
+    } catch (error) {
+      await trx.rollback();
+      console.log(error);
       throw error;
     }
   },

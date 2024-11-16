@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
+import { checkPassword, chectDateNotInTheFuture, checkBirthDate } from '../../utils/validations'
 
 const Register = () => {
   // using useRef hook to create ref for each input field
@@ -16,43 +17,34 @@ const Register = () => {
   // using useNavigate hook to navigate to Login page after registration
   const navigate = useNavigate();
 
-  // function to check if the user is at least 12 years old and didn't set their birth date as date in the future
-  const checkBirthDate = (date_of_birth: string | undefined): boolean => {
-    if (date_of_birth) {
-      const currentDate = new Date();
-      const birthDate = new Date(date_of_birth);
-      // checking if the user is setting their birth date as a date in the future
-      if (currentDate.getTime() < birthDate.getTime()) {
-        setMessage("You can't set your birth date as a date in the future");
-        return false;
-      }
-      // calculating the age of the user
-      const age = currentDate.getFullYear() - birthDate.getFullYear();
-      // checking if the user is less than 12 years old
-      if (age < 12) {
-        setMessage("You must be at least 12 years old");
-        return false;
-      }
-      return true;
-    }
-    // returning false if variable date_of_birth was undefined
-    return false;
-  };
 
   // async registration
   const register = async (
     e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLButtonElement>
   ): Promise<void> => {
     e.preventDefault();
-    // getting all the values
-    const date_of_birth = dateOfBirthRef.current?.value;
-    // checking if the user is at least 12 years old and didn't set their birth date as date in the future
-    if (!checkBirthDate(date_of_birth)) return;
-    const first_name = firstNameRef.current?.value;
-    const family_name = familyNameRef.current?.value;
-    const username = usernameRef.current?.value;
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
+    const date_of_birth = dateOfBirthRef.current?.value as string;
+    // checking if set their birth date as date in the future
+    if (!chectDateNotInTheFuture(date_of_birth) ){
+      setMessage("You can't set your birth date as a date in the future");
+      return;    
+    }
+
+    if (!checkBirthDate(date_of_birth)) {
+      setMessage("You must be at least 7 years old");
+      return;
+    }
+    // checking if password is at least 8 characters long
+    const password = passwordRef.current?.value.trim() as string;
+    if (!checkPassword(password)) {
+      setMessage("Password must be at least 8 characters long");
+      return;
+    }
+        // getting all the values
+    const first_name = firstNameRef.current?.value.trim();
+    const family_name = familyNameRef.current?.value.trim();
+    const username = usernameRef.current?.value.trim();
+    const email = emailRef.current?.value.toLowerCase().trim();
     try {
       const response = await axios.post(
         `${BASE_URL}/user/register`,

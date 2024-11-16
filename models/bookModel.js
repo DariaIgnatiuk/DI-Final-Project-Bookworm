@@ -8,7 +8,8 @@ module.exports = {
     try {
       const books = await db("books")
         .select("id", "title", "authors", "image", "status", "reading_progress")
-        .where({ user_id: user_id });
+        .where({ user_id: user_id })
+        .orderBy("id");
       return books;
     } catch (error) {
       throw error;
@@ -17,7 +18,7 @@ module.exports = {
   getBooksByStatus: async (user_id, status) => {
     try {
       const books = await db("books")
-        .select("id", "title", "authors", "image", "status", "reading_progress")
+        .select("id", "title", "authors", "image", "status", "reading_progress", "pagecount", "score")
         .where({ user_id: user_id, status: status });
       return books;
     } catch (error) {
@@ -161,6 +162,27 @@ module.exports = {
         },
 
         ["*"]
+      );
+      await trx.commit();
+      return updatedBook;
+    } catch (error) {
+      await trx.rollback();
+      console.log(error);
+      throw error;
+    }
+  },
+  editBookScore: async (
+    id,
+    score,
+  ) => {
+    const trx = await db.transaction();
+    try {
+      const updatedBook = await trx("books").where({ id: id }).update(
+        {
+          score,
+        },
+
+        ["id"]
       );
       await trx.commit();
       return updatedBook;

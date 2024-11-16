@@ -1,31 +1,22 @@
 import { useSelectorCurrentBook, useSetMessage } from "./state/hooks.js";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
-import { checkScore } from "../../utils/validations.js";
 
 const EditFinished = () => {
   const book = useSelectorCurrentBook();
   const useSetMessageHook = useSetMessage();
-  // references for inputs
-  const scoreRef = useRef<HTMLInputElement>(null);
+
   const [renderInputs, setRenderInputs] = useState(false);
   const navigate = useNavigate();
+  const [score, setScore] = useState(book.score as number);
 
   // edit the book - send request to server
   const editBook = async (): Promise<void> => {
     const dialog = document.getElementById("dialog") as HTMLDialogElement;
     dialog.close();
-    const score = Number(scoreRef.current?.value);
-    if (!score) {
-      useSetMessageHook("Please enter a score");
-      return;
-    }
-    if (!checkScore(score)) {
-      useSetMessageHook("Score can not be higher than 5 or lower than 0");
-      return;
-    }
+
     try {
       const response = await axios.put(
         `${BASE_URL}/books/edit/${book.id}`,
@@ -53,13 +44,30 @@ const EditFinished = () => {
     }
   };
 
+  const returnScore = () => {
+    const numbers = [1, 2, 3, 4, 5];
+    return numbers.map((num, index) =>
+        num <= score ? (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/star.svg"
+          />
+        ) : (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/emptyStar.svg"
+          />
+        )
+      );
+    };
+
   const getAdditionalInfo = () => {
     return (
       <dialog open id="dialog">
         <div className="dialogWindow">
-          <p>My rating for this book: {book.score}</p>
-          <p>I would like to change it to: </p>
-          <input type="text" ref={scoreRef} />
+          <div>{returnScore()}</div>
           <br />
           <button className="button" onClick={editBook}>
             Save

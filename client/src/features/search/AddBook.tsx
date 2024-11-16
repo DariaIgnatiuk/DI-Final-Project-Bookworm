@@ -1,10 +1,9 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import Logout from "../loginRegister/Logout";
 import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
 import { emptyBookExpanded } from "../../types";
-import { checkScore } from "../../utils/validations";
+import Navigation from "../navigation/Navigation";
 
 const AddBook = () => {
   // state for displaying error message
@@ -16,12 +15,12 @@ const AddBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   // references for inputs
-  const rateRef = useRef<HTMLInputElement>(null);
   const date_startRef = useRef<HTMLInputElement>(null);
   const date_finishRef = useRef<HTMLInputElement>(null);
   const booktypeRef = useRef<HTMLSelectElement>(null);
   const pagetypeRef = useRef<HTMLSelectElement>(null);
   const pagecountRef = useRef<HTMLInputElement>(null);
+  const [score, setScore] = useState(0);
 
   // fetch all the information about the book from Google Book API on component mount
   const fetchBook = async (): Promise<void> => {
@@ -61,7 +60,7 @@ const AddBook = () => {
           pagetype: book.pagetype,
           publisher: book.publisher,
           reading_progress: book.reading_progress,
-          score: book.score,
+          score,
           status: book.status,
           title: book.title,
           user_id: localStorage.getItem("user_id"),
@@ -87,20 +86,20 @@ const AddBook = () => {
     }, 1500);
   };
 
+const checkDates = (date_start:string, date_finish:string) => {
+  const startDate = new Date(date_start);
+  const finishDate = new Date(date_finish);
+  if (finishDate < startDate) return false;
+  return true;
+}
+
   // ONLY FOR FINISHED validates Finished books
   const statusFinishedValidateInput = () => {
-    const score = Number(rateRef.current?.value);
     const date_start = date_startRef.current?.value.toString();
     const date_finish = date_finishRef.current?.value.toString();
-    // check if score is valid
-    if (score) {
-      if (!checkScore(score)) {
-        setMessage("Score can not be higher than 5 or lower than 0");
-      } else {
-        book.score = score;
-      }
-    }
     // dates are not saved if they weren't filled in
+    if (date_start && date_finish) 
+      if (!checkDates(date_start, date_finish)) {setMessage('Finish date can not be earlier than start date.'); return; }
     if (date_start) {
       book.date_start = date_start;
     }
@@ -109,6 +108,26 @@ const AddBook = () => {
     }
     addBookToDB();
   };
+
+
+  const returnScore = () => {
+    const numbers = [1, 2, 3, 4, 5];
+    return numbers.map((num, index) =>
+        num <= score ? (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/star.svg"
+          />
+        ) : (
+          <img
+            onClick={() => setScore(index + 1)}
+            className="imgIcon"
+            src="../../../rating/emptyStar.svg"
+          />
+        )
+      );
+    };
 
   // ONLY FOR FINISHED shows inputs for Finished books (rating, start and finish dates)
   const statusFinishedGetAdditionalInfo = () => {
@@ -122,7 +141,7 @@ const AddBook = () => {
           <label>When did you finish reading this book? </label>
           <input type="date" ref={date_finishRef} /> <br />
           <label>How would you rate this book? </label>
-          <input ref={rateRef} placeholder="0..5" /> <br />
+          <div> {returnScore()}</div>
           <button className="button" onClick={statusFinishedValidateInput}>
             Save
           </button>
@@ -143,7 +162,7 @@ const AddBook = () => {
     }
     book.booktype = booktypeRef.current?.value;
     book.pagetype = pagetypeRef.current?.value;
-    book.pagecount = Number(pagecountRef.current?.value);
+    if (pagecountRef.current?.value) book.pagecount = Number(pagecountRef.current?.value);
     addBookToDB();
   };
 
@@ -259,15 +278,7 @@ const AddBook = () => {
 
   return (
     <>
-      <nav>
-        <Link to="/books/search">
-          <button className="navButton">Back</button>
-        </Link>
-        <Link to="dashboard">
-          <button className="navButton">Dashboard</button>
-        </Link>
-        <Logout />
-      </nav>
+      <Navigation/>
       <div className="main">
         <div className="errorMessage">{message}</div>
         {book.id === 0 ? renderBook() : <></>}

@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import booksReducer from "../features/dashboard/state/slice";
 import { BooksReducerState } from "../features/dashboard/state/slice";
+import reviewsReducer from '../features/review/state/slice'
+import { ReviewsReducerState } from '../features/review/state/slice'
 
-const combineReducersApp = combineReducers({ booksReducer });
+const combineReducersApp = combineReducers({ booksReducer, reviewsReducer });
 
 const store = configureStore({
   reducer: combineReducersApp,
@@ -19,4 +21,5 @@ export default store;
 
 export type ExplicitAppState = {
   booksReducer: BooksReducerState;
+  reviewsReducer: ReviewsReducerState;
 };

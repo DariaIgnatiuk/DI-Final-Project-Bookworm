@@ -4,6 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "../../model/baseURL";
 import { useSetBooks, useSelectorAllBooks } from "./state/hooks";
 import Navigation from "../navigation/Navigation";
+import { returnScore } from "../utlis/Utils";
 
 const BooksByStatus = () => {
   // state for displaying error message
@@ -46,6 +47,22 @@ const BooksByStatus = () => {
     }
   }, []);
 
+  const renderProgressBar = (reading_progress:number, pagecount:number) => {
+        // calculating progress in %
+        let progress: number = 0;
+        if (pagecount && pagecount != 0 && reading_progress) {
+          progress = (reading_progress / pagecount) * 100;
+        }
+    return (
+      <div className="progress-bar" style={{marginLeft: '10px' }}>
+      <div
+        className="progress-bar-green"
+        style={{ width: `${progress}%`}}
+      ></div>
+    </div>
+    )
+  }
+
   return (
     <>
       <Navigation />
@@ -72,7 +89,11 @@ const BooksByStatus = () => {
                 ) : (
                   <img className="statusBar" src="/statusWantToRead.png" />
                 )}
+                <br/>
+                 {(status === 'finished') && (book.score)? returnScore(book.score):<></>}  
+                 {(status === 'reading')? renderProgressBar(book.reading_progress, book.pagecount):<></>}             
               </div>
+
             </div>
           </Link>
         ))}
