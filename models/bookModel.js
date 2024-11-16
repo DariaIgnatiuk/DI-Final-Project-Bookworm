@@ -56,7 +56,8 @@ module.exports = {
   searchBooks: async (title, authors) => {
     try {
       const books = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=inauthor:${authors}&intitle:${title}&maxResults=40&key=${API_KEY}`
+        `https://www.googleapis.com/books/v1/volumes?q=${title}+inauthor:${authors}&maxResults=40&key=${API_KEY}`
+
       );
       return books.data;
     } catch (error) {
