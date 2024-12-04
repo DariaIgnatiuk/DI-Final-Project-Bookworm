@@ -23,6 +23,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   // number of books of the user's collection
   const numberOfBooks = useSelectorAllBooks().length;
+  let booksReading = useSelectorBooksReading();
+  let booksFinished = useSelectorBooksFinished();
+  let booksWantToRead = useSelectorBooksWantToRead();
+  const allbooks = useSelectorAllBooks();
 
   // fetch all books for the user
   const fetchAllBooks = async (): Promise<void> => {
@@ -50,7 +54,7 @@ const Dashboard = () => {
 
   // checks if the user has 0 books
   const checkIfZeroBooks = () => {
-    if (useSelectorAllBooks().length === 0)
+    if (allbooks.length === 0)
       return (
         <div id="zeroBooks">
           <p>You don't have any books in your collection yet</p>
@@ -79,7 +83,6 @@ const Dashboard = () => {
 
   // in there are books with status Reading, render them
   const renderBooksReading = (): ReactNode => {
-    let booksReading = useSelectorBooksReading();
     // show only the first 7 book from the list
     if (booksReading.length > 7) {
       booksReading = booksReading.slice(0, 7);
@@ -102,7 +105,6 @@ const Dashboard = () => {
 
   // in there are books with status Finished, render them
   const renderBooksFinished = (): ReactNode => {
-    let booksFinished = useSelectorBooksFinished();
     if (booksFinished.length > 7) {
       booksFinished = booksFinished.slice(0, 7);
     }
@@ -124,7 +126,6 @@ const Dashboard = () => {
 
   // in there are books with status Want to read, render them
   const renderBooksWantToRead = (): ReactNode => {
-    let booksWantToRead = useSelectorBooksWantToRead();
     if (booksWantToRead.length > 7) {
       booksWantToRead = booksWantToRead.slice(0, 7);
     }
@@ -159,8 +160,9 @@ const Dashboard = () => {
         <h3 id="dashboardHeading">
           Welcome to your Dashboard, {user_first_name} !
         </h3>
+        {}
 
-        {/* if the  user doesn't have any books, show a message, in they do, render books*/}
+
         {numberOfBooks === 0 ? (
           checkIfZeroBooks()
         ) : (
@@ -169,6 +171,7 @@ const Dashboard = () => {
             {renderBooksWantToRead()}
           </>
         )}
+
 
         <div className="errorMessage">{message}</div>
       </div>
